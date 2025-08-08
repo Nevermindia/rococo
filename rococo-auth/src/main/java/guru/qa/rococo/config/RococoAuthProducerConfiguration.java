@@ -33,9 +33,7 @@ public class RococoAuthProducerConfiguration {
 
   @Bean
   public Map<String, Object> producerConfiguration() {
-    Map<String, Object> properties = new HashMap<>(kafkaProperties.buildProducerProperties(
-        new DefaultSslBundleRegistry()
-    ));
+    Map<String, Object> properties = new HashMap<>(kafkaProperties.buildProducerProperties());
     properties.put(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     properties.put(VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
     return properties;

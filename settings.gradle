@@ -7,4 +7,5 @@ include 'rococo-painting'
 include 'rococo-geo'
 include 'rococo-userdata'
 include 'rococo-grpc-common'
+include 'rococo-tests'
 

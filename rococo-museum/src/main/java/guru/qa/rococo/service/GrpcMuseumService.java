@@ -5,6 +5,7 @@ import guru.qa.rococo.data.MuseumEntity;
 import guru.qa.rococo.data.repository.MuseumRepository;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -21,6 +22,7 @@ public class GrpcMuseumService extends RococoMuseumServiceGrpc.RococoMuseumServi
 
     private final MuseumRepository museumRepository;
 
+    @Autowired
     public GrpcMuseumService(MuseumRepository museumRepository) {
         this.museumRepository = museumRepository;
     }

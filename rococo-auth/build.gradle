@@ -1,45 +1,55 @@
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '3.1.3'
-    id 'io.spring.dependency-management' version '1.1.3'
-    id 'com.palantir.docker' version '0.35.0'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'com.google.cloud.tools.jib' version '3.4.1'
 }
 
-group = 'guru.qa'
-version = '0.0.1-SNAPSHOT'
+group = 'org.rococo'
+version = '1.0.0'
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
-    implementation "org.springframework.boot:spring-boot-starter-validation"
-    implementation "org.springframework.boot:spring-boot-starter-actuator"
-    implementation 'org.springframework.security:spring-security-oauth2-authorization-server:1.1.1'
-    implementation "org.springframework.kafka:spring-kafka:${project.ext.spingKafkaVersion}"
-    implementation "org.flywaydb:flyway-core:${project.ext.flywayVersion}"
-    implementation "org.flywaydb:flyway-mysql:${project.ext.flywayVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation "org.springframework.kafka:spring-kafka:${project.ext.springKafkaVersion}"
     annotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"
     compileOnly "org.projectlombok:lombok:${project.ext.lombokVersion}"
-    runtimeOnly "mysql:mysql-connector-java:${project.ext.mysqlConnectorVersion}"
+    runtimeOnly "mysql:mysql-connector-java:${project.ext.mysqlDriverVersion}"
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "com.h2database:h2:${project.ext.h2Version}"
 }
 
-docker {
-    dependsOn build
-    name "nevermindia/rococo-auth:${project.version}"
-    tag 'latest', 'nevermindia/rococo-auth:latest'
-    files bootJar.archiveFile
-    buildArgs([APP_VER: project.version, DOCKER: project.ext.dockerImage])
-    noCache true
+jib {
+    container {
+        ports = ['9000']
+        jvmFlags = ["-Dspring.profiles.active=${System.getenv("PROFILE")}"]
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+        labels = [
+                'version'   : "${project.version}".toString()
+        ]
+    }
+    from {
+        image = "${project.ext.dockerImage}"
+        platforms {
+            platform {
+                architecture = "${project.ext.dockerArch}"
+                os = 'linux'
+            }
+        }
+    }
+    to {
+        image = "${project.ext.dockerHubName}/${project.name}-${System.getenv("PROFILE")}"
+        tags = ['latest', "${project.version}"]
+    }
 }
 
-tasks.register('dockerRmi', Exec) {
-    workingDir "${buildDir}"
-    commandLine 'bash', '-c', "docker rmi -f \$(docker images | grep 'rococo')\n"
-}
-
+tasks.jib.dependsOn test
+tasks.jibDockerBuild.dependsOn test
 
 tasks.named('test') {
     useJUnitPlatform()

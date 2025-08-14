@@ -5,6 +5,7 @@ import guru.qa.rococo.data.ArtistEntity;
 import guru.qa.rococo.data.repository.ArtistRepository;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -21,6 +22,7 @@ public class GrpcArtistService extends RococoArtistServiceGrpc.RococoArtistServi
 
     private final ArtistRepository artistRepository;
 
+    @Autowired
     public GrpcArtistService(ArtistRepository artistRepository) {
         this.artistRepository = artistRepository;
     }

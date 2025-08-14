@@ -2,31 +2,44 @@ plugins {
     id 'java'
 }
 
-group = 'guru.qa'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+group = 'org.rococo'
 
-repositories {
-    mavenCentral()
-}
+allprojects {
+    apply plugin: 'java'
 
-subprojects {
     repositories {
         mavenCentral()
     }
-    ext {
-        mysqlConnectorVersion = "8.0.33"
-        springGrpcVersion = "2.14.0.RELEASE"
-        flywayVersion = "9.22.3"
-        spingKafkaVersion = "3.0.7"
-        lombokVersion = "1.18.30"
 
-        dockerImage = System.getProperty("os.arch") == "aarch64" || System.getProperty("os.arch") == "arm64"
-                ? "arm64v8/eclipse-temurin:19-jre"
-                : "eclipse-temurin:19-jre"
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
     }
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+subprojects {
+    ext {
+        dockerHubName = "nevermindia"
+
+        lombokVersion = '1.18.34'
+        springKafkaVersion = '3.2.2'
+        mysqlDriverVersion = '8.0.33'
+        springGrpcVersion = '3.1.0.RELEASE'
+        openApiVersion = '2.6.0'
+        protobufVersion = '3.25.3'
+        grpcVersion = '1.63.0'
+        h2Version = '2.3.232'
+        mockitoVersion = '5.12.0'
+        wiremockVersion = '3.10.0'
+        springGraphqlDateTimeVersion = '6.0.0'
+
+        dockerImage = System.getProperty("os.arch") == "aarch64" || System.getProperty("os.arch") == "arm64"
+                ? "arm64v8/eclipse-temurin:21-jdk"
+                : "eclipse-temurin:21-jdk"
+        dockerArch = System.getProperty("os.arch") == "aarch64" || System.getProperty("os.arch") == "arm64"
+                ? "arm64"
+                : "amd64"
+    }
 }
+

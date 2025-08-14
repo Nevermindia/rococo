@@ -7,8 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RococoArtistApplication {
 
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(RococoArtistApplication.class);
-        springApplication.run(args);
+        SpringApplication.run(RococoArtistApplication.class, args);
     }
 
 }

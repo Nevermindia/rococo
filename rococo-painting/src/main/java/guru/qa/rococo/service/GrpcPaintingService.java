@@ -5,6 +5,7 @@ import guru.qa.rococo.data.PaintingEntity;
 import guru.qa.rococo.data.repository.PaintingRepository;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -18,6 +19,7 @@ public class GrpcPaintingService extends RococoPaintingServiceGrpc.RococoPaintin
 
     private final PaintingRepository paintingRepository;
 
+    @Autowired
     public GrpcPaintingService(PaintingRepository paintingRepository) {
         this.paintingRepository = paintingRepository;
     }

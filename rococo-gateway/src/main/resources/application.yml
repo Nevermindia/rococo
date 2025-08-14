@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-    name: rococo-api
+    name: rococo-gateway
 
 logging:
   level:

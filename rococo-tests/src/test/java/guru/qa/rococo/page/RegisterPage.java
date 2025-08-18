@@ -18,45 +18,55 @@ public class RegisterPage extends BasePage<RegisterPage> {
     private final SelenideElement passwordInput = $("input[name='password']");
     private final SelenideElement submitPasswordInput = $("input[name='passwordSubmit']");
     private final SelenideElement signUpBtn = $("button[type='submit']");
-    private final SelenideElement signInBtn = $(".form__link");
+    private final SelenideElement signInBtn = $("a[data-testid='loginButton']");
     private final SelenideElement errorMessage = $(".form__error");
 
-    @Step("Set username: '{0}'")
+    @Override
+    public RegisterPage checkPageIsLoaded() {
+        usernameInput.shouldBe(visible);
+        passwordInput.shouldBe(visible);
+        signUpBtn.shouldBe(visible);
+        signInBtn.shouldBe(visible);
+        return null;
+    }
+
+
+    @Step("Ввести имя: '{username}'")
     @Nonnull
     public RegisterPage setUserName(String username) {
         usernameInput.setValue(username);
         return this;
     }
 
-    @Step("Set password: '{0}'")
+    @Step("Ввести пароль: '{password}'")
     @Nonnull
     public RegisterPage setPassword(String password) {
         passwordInput.setValue(password);
         return this;
     }
 
-    @Step("Submit password: '{0}'")
+    @Step("Подтвердить пароль: '{password}'")
     @Nonnull
     public RegisterPage setPasswordSubmit(String password) {
         submitPasswordInput.setValue(password);
         return this;
     }
 
-    @Step("Click sign up button")
+    @Step("Нажать кнопку 'Зарегистрироваться'")
     @Nonnull
     public RegisterPage submitRegistration() {
         signUpBtn.click();
         return this;
     }
 
-    @Step("Click Sign in button")
+    @Step("Нажать кнопку 'Войти'")
     @Nonnull
     public RegisterPage clickSignInBtn() {
         signInBtn.click();
         return this;
     }
 
-    @Step("Register with username - '{0}', password - '{1}'")
+    @Step("Зарегистрироваться с именем - '{username}', паролем - '{password}'")
     @Nonnull
     public LoginPage doRegister(String username, String password, String submitPassword) {
         usernameInput.setValue(username);
@@ -67,7 +77,7 @@ public class RegisterPage extends BasePage<RegisterPage> {
         return new LoginPage();
     }
 
-    @Step("Check error message with text '{errorText}'")
+    @Step("Проверить ошибку с текстом '{errorText}'")
     @Nonnull
     public RegisterPage checkErrorMessage(String errorText) {
         errorMessage.shouldBe(visible).shouldHave(exactText(errorText));

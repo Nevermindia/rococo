@@ -3,12 +3,17 @@ package guru.qa.rococo.config;
 import javax.annotation.Nonnull;
 
 public interface Config {
-
     static @Nonnull Config getInstance() {
         return "docker".equals(System.getProperty("test.env"))
-                ? DockerConfig.instance
-                : LocalConfig.instance;
+                ? DockerConfig.INSTANCE
+                : LocalConfig.INSTANCE;
     }
+
+    @Nonnull
+    default String projectId() {
+        return "nevermindia-rococo";
+    }
+
     @Nonnull
     String frontUrl();
 
@@ -16,45 +21,57 @@ public interface Config {
     String authUrl();
 
     @Nonnull
-    String authJdbcUrl();
-
-    @Nonnull
     String gatewayUrl();
 
     @Nonnull
-    String userdataUrl();
+    String databaseAddress();
+
+    default String databaseUser() {
+        return "root";
+    }
+
+    default String databasePassword() {
+        return "secret";
+    }
 
     @Nonnull
-    String userdataJdbcUrl();
+    String userdataGrpcAddress();
+
+    default int userdataGrpcPort() {
+        return 8091;
+    }
 
     @Nonnull
-    String artistUrl();
+    String artistGrpcAddress();
 
-    @Nonnull
-    String artistJdbcUrl();
-
-    @Nonnull
-    String geoJdbcUrl();
-
-    @Nonnull
-    String geoUrl();
-
-    @Nonnull
-    String museumJdbcUrl();
-
-    @Nonnull
-    String museumUrl();
-
-    @Nonnull
-    String paintingJdbcUrl();
-
-    @Nonnull
-    String paintingUrl();
-
-    default int currencyGrpcPort(){
+    default int artistGrpcPort() {
         return 8092;
     }
 
     @Nonnull
-    String allureDockerServiceUrl();
+    String museumGrpcAddress();
+
+    default int museumGrpcPort() {
+        return 8093;
+    }
+
+    @Nonnull
+    String geoGrpcAddress();
+
+    default int geoGrpcPort() {
+        return 8094;
+    }
+
+    @Nonnull
+    String paintingGrpcAddress();
+
+    default int paintingGrpcPort() {
+        return 8095;
+    }
+
+    @Nonnull
+    String screenshotBaseDir();
+
+    @Nonnull
+    String allureDockerUrl();
 }

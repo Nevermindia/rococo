@@ -4,6 +4,9 @@ buildscript {
         grpcVersion = '1.63.0'
         allureVersion = '2.29.1'
         selenideVersion = '7.7.1'
+        atomicosVersion = '6.0.0'
+        okhttp3Version = '4.11.0'
+        springDataCommonsVersion = '3.3.3'
     }
 }
 
@@ -33,8 +36,9 @@ dependencies {
     testImplementation('com.squareup.retrofit2:converter-jackson:2.9.0') {
         exclude group: "com.squareup.retrofit2", module: "retrofit"
     }
-    testImplementation('com.squareup.okhttp3:logging-interceptor:3.14.9') {
-    }
+    testImplementation "com.squareup.okhttp3:logging-interceptor:${okhttp3Version}"
+    testImplementation "com.squareup.okhttp3:okhttp-urlconnection:${okhttp3Version}"
+    testImplementation "org.springframework.data:spring-data-commons:${springDataCommonsVersion}"
     // DB
     testImplementation 'org.springframework:spring-jdbc:6.0.4'
     testImplementation 'com.mysql:mysql-connector-j:8.0.33'
@@ -42,6 +46,10 @@ dependencies {
     testImplementation 'org.hibernate:hibernate-core:6.1.7.Final'
     testImplementation 'com.github.vertical-blank:sql-formatter:2.0.3'
     testImplementation 'org.springframework.security:spring-security-crypto:6.1.0'
+    testImplementation "com.atomikos:transactions-jta:${atomicosVersion}:jakarta"
+    testImplementation "com.atomikos:transactions-hibernate4:${atomicosVersion}:jakarta"
+    testImplementation "com.atomikos:transactions-jdbc:${atomicosVersion}"
+    testImplementation 'com.github.h-thurow:simple-jndi:0.25.0'
     // Allure
     testImplementation "io.qameta.allure:allure-attachments:${allureVersion}"
     testImplementation("io.qameta.allure:allure-junit5:${allureVersion}") {
@@ -70,6 +78,7 @@ dependencies {
     testImplementation "io.grpc:grpc-stub:${grpcVersion}"
     testImplementation "io.grpc:grpc-netty:${grpcVersion}"
     testImplementation "com.google.protobuf:protobuf-java:${protobufVersion}"
+    testImplementation "com.google.protobuf:protobuf-java-util:${protobufVersion}"
     testImplementation project(':rococo-grpc-common')
     compileOnly 'jakarta.annotation:jakarta.annotation-api:1.3.5' // Java 9+ compatibility - Do NOT update to 2.0.0
     // Lombok

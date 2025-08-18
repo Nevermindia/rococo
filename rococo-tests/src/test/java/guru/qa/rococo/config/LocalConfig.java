@@ -1,11 +1,22 @@
 package guru.qa.rococo.config;
 
+import com.codeborne.selenide.Configuration;
+import org.jetbrains.annotations.NotNull;
+
 import javax.annotation.Nonnull;
 
 enum LocalConfig implements Config {
-    instance;
+    INSTANCE;
 
-    @Nonnull
+    static {
+        Configuration.browserSize = "1920x1080";
+    }
+
+    @Override
+    public String databaseAddress() {
+        return "localhost:3306";
+    }
+
     @Override
     public String frontUrl() {
         return "http://127.0.0.1:3000/";
@@ -13,85 +24,49 @@ enum LocalConfig implements Config {
 
     @Nonnull
     @Override
+    public String gatewayUrl() {
+        return "http://127.0.0.1:8080/";
+    }
+
+    @Override
     public String authUrl() {
         return "http://127.0.0.1:9000/";
     }
 
-    @Nonnull
     @Override
-    public String authJdbcUrl() {
-        return "";
+    public String userdataGrpcAddress() {
+        return "127.0.0.1";
     }
 
-    @Nonnull
     @Override
-    public String gatewayUrl() {
-        return "http://127.0.0.1:8090/";
+    public String artistGrpcAddress() {
+        return "127.0.0.1";
     }
 
-    @Nonnull
     @Override
-    public String userdataUrl() {
-        return "http://127.0.0.1:8091/";
+    public String museumGrpcAddress() {
+        return "127.0.0.1";
     }
 
-    @Nonnull
     @Override
-    public String userdataJdbcUrl() {
-        return "";
+    public String geoGrpcAddress() {
+        return "127.0.0.1";
     }
 
-    @Nonnull
     @Override
-    public String artistUrl() {
-        return "";
+    public String paintingGrpcAddress() {
+        return "127.0.0.1";
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public String artistJdbcUrl() {
-        return "";
+    public String screenshotBaseDir() {
+        return "screenshots/local/";
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public String geoJdbcUrl() {
-        return "";
-    }
-
-    @Nonnull
-    @Override
-    public String geoUrl() {
-        return "";
-    }
-
-    @Nonnull
-    @Override
-    public String museumJdbcUrl() {
-        return "";
-    }
-
-    @Nonnull
-    @Override
-    public String museumUrl() {
-        return "";
-    }
-
-    @Nonnull
-    @Override
-    public String paintingJdbcUrl() {
-        return "";
-    }
-
-    @Nonnull
-    @Override
-    public String paintingUrl() {
-        return "";
-    }
-
-    @Nonnull
-    @Override
-    public String allureDockerServiceUrl() {
+    public String allureDockerUrl() {
         return "http://127.0.0.1:5050/";
     }
 }

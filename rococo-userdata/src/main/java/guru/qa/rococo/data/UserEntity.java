@@ -37,7 +37,7 @@ public class UserEntity {
 
     public static UserResponse toGrpcMessage(UserEntity entity) {
         UserResponse.Builder builder = UserResponse.newBuilder()
-                .setId(copyFromUtf8(entity.getId().toString()))
+                .setId(String.valueOf(entity.id))
                 .setUsername(entity.getUsername());
 
         if (entity.getFirstname() != null) {

@@ -1,13 +1,12 @@
-package guru.qa.rococo.page;
+package guru.qa.rococo.page.component;
 
 import com.codeborne.selenide.SelenideElement;
-import guru.qa.rococo.config.Config;
+import guru.qa.rococo.page.LoginPage;
+import guru.qa.rococo.page.ProfilePage;
 import io.qameta.allure.Step;
 
-import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -21,6 +20,7 @@ public class HeaderPage  {
     private final SelenideElement museumsTitle = self.$("a[href='/museum']");
     private final SelenideElement switchModeBtn = self.$("div[role='switch']");
     private final SelenideElement loginBtn = self.$("button.variant-filled-primary");
+    private final SelenideElement profileBtn = self.$("button figure.avatar");
 
     @Step("Проверить, что страница загрузилась")
     public HeaderPage checkHeaderIsLoaded() {
@@ -36,6 +36,24 @@ public class HeaderPage  {
     public LoginPage openLoginPage() {
         loginBtn.click();
         return new LoginPage();
+    }
+
+    @Step("Открыть отображение кнопки 'Войти' - пользователь неавторизован")
+    public LoginPage checkLoginBtnIsVisible() {
+        loginBtn.click();
+        return new LoginPage();
+    }
+
+    @Step("Открыть отображение аватара - пользователь авторизован")
+    public LoginPage checkAvatarIsVisible() {
+        profileBtn.shouldBe(visible);
+        return new LoginPage();
+    }
+
+    @Step("Открыть Профиль")
+    public ProfilePage openProfilePage() {
+        profileBtn.click();
+        return new ProfilePage();
     }
 //
 //    public ArtistsPage openArtistsPage() {

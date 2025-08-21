@@ -26,7 +26,7 @@ public class RandomDataUtils {
     }
 
     public static String randomMuseumTitle() {
-        return "Государственный русский музей №" + randomNumber(1, 9999);
+        return "Государственный музей №" + randomNumber(1, 9999);
     }
 
     public static String randomMuseumDescription() {

@@ -21,7 +21,7 @@ public record ArtistJson(
 
     public static ArtistJson fromGrpcMessage(ArtistResponse response) {
         return new ArtistJson(
-                UUID.fromString(response.getId().toStringUtf8()),
+                UUID.fromString(response.getId()),
                 response.getName(),
                 response.getBiography(),
                 response.getPhoto().toStringUtf8()

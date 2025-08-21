@@ -1,10 +1,12 @@
 package guru.qa.rococo.data.model;
 
+import guru.qa.rococo.model.ArtistJson;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.Base64;
 import java.util.Objects;
 import java.util.UUID;
 

@@ -5,6 +5,8 @@ import guru.qa.rococo.data.jpa.EntityManagerFactoryProvider;
 import guru.qa.rococo.data.jpa.JpaService;
 import guru.qa.rococo.data.model.ArtistEntity;
 
+import java.util.UUID;
+
 public class ArtistDAOHibernate extends JpaService {
     public ArtistDAOHibernate() {
         super(EntityManagerFactoryProvider.INSTANCE.getDataSource(DataBase.ARTIST).createEntityManager());
@@ -14,7 +16,12 @@ public class ArtistDAOHibernate extends JpaService {
         persist(artist);
     }
 
-    public void deleteArtist(ArtistEntity artist) {
-        remove(artist);
+    public void deleteArtistById(UUID artistId) {
+        tx(em -> {
+            ArtistEntity artist = em.find(ArtistEntity.class, artistId);
+            if (artist != null) {
+                em.remove(artist);
+            }
+        });
     }
 }

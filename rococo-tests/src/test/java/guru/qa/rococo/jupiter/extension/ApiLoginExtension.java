@@ -73,7 +73,7 @@ public class ApiLoginExtension implements BeforeEachCallback, ParameterResolver 
                         WebDriverRunner.getWebDriver().manage().addCookie(
                                 getJsessionIdCookie()
                         );
-                        Selenide.open(MainPage.URL, MainPage.class).checkPageIsLoaded();
+                        Selenide.open(MainPage.URL, MainPage.class).checkMainPageIsLoaded();
                     }
                 });
     }

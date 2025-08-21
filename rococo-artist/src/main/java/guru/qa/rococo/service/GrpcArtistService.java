@@ -29,7 +29,7 @@ public class GrpcArtistService extends RococoArtistServiceGrpc.RococoArtistServi
 
     @Override
     public void getArtist(ArtistRequest request, StreamObserver<ArtistResponse> responseObserver) {
-        UUID artistId = fromString(request.getId().toStringUtf8());
+        UUID artistId = fromString(request.getId());
 
         artistRepository.findById(artistId)
                 .ifPresentOrElse(
@@ -74,7 +74,7 @@ public class GrpcArtistService extends RococoArtistServiceGrpc.RococoArtistServi
 
     @Override
     public void updateArtist(UpdateArtistRequest request, StreamObserver<ArtistResponse> responseObserver) {
-        UUID artistId = fromString(request.getId().toStringUtf8());
+        UUID artistId = fromString(request.getId());
 
         artistRepository.findById(artistId)
                 .ifPresentOrElse(
@@ -94,7 +94,7 @@ public class GrpcArtistService extends RococoArtistServiceGrpc.RococoArtistServi
     @Override
     public void getArtistByIds(ArtistIdsRequest request, StreamObserver<AllArtistByIdsResponse> responseObserver) {
         Set<UUID> artistIds = request.getIdList().stream()
-                .map(byteString -> fromString(byteString.toStringUtf8()))
+                .map(byteString -> fromString(byteString))
                 .collect(Collectors.toSet());
 
         List<ArtistEntity> artists = artistRepository.findAllByIdIn(artistIds);

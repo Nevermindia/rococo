@@ -1,6 +1,7 @@
 package guru.qa.rococo.page;
 
 import com.codeborne.selenide.SelenideElement;
+import guru.qa.rococo.page.component.HeaderPage;
 import io.qameta.allure.Step;
 
 import javax.annotation.Nonnull;
@@ -24,8 +25,7 @@ public class MainPage extends BasePage<MainPage> {
     }
 
     @Step("Проверить, что страница загрузилась")
-    @Override
-    public MainPage checkPageIsLoaded() {
+    public MainPage checkMainPageIsLoaded() {
         header.checkHeaderIsLoaded();
         mainTitle.shouldBe(visible);
         paintings.shouldBe(visible);

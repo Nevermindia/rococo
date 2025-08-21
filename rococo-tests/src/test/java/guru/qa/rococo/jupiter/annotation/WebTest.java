@@ -1,10 +1,8 @@
 package guru.qa.rococo.jupiter.annotation;
 
 
-import guru.qa.rococo.jupiter.extension.ApiLoginExtension;
-import guru.qa.rococo.jupiter.extension.BrowserExtension;
-import guru.qa.rococo.jupiter.extension.ScreenShotTestExtension;
-import guru.qa.rococo.jupiter.extension.UserExtension;
+import guru.qa.rococo.jupiter.extension.*;
+import guru.qa.rococo.tests.web.PaintingExtension;
 import io.qameta.allure.junit5.AllureJunit5;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -17,6 +15,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @ExtendWith({
         BrowserExtension.class,
+        MuseumExtension.class,
+        ArtistExtension.class,
+        PaintingExtension.class,
         AllureJunit5.class,
         UserExtension.class,
         ApiLoginExtension.class

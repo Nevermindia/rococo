@@ -20,8 +20,7 @@ public class LoginPage extends BasePage<LoginPage> {
     private final SelenideElement errorMessage = $("p.form__error");
 
     @Step("Проверить, что страница загрузилась")
-    @Override
-    public LoginPage checkPageIsLoaded() {
+    public LoginPage checkLoginPageIsLoaded() {
         usernameInput.shouldBe(visible);
         passwordInput.shouldBe(visible);
         submitBtn.shouldBe(visible);

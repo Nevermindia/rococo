@@ -1,12 +1,12 @@
 package guru.qa.rococo.tests.web;
 
 import com.codeborne.selenide.Selenide;
-import guru.qa.rococo.jupiter.annotation.ApiLogin;
 import guru.qa.rococo.jupiter.annotation.User;
 import guru.qa.rococo.jupiter.annotation.WebTest;
 import guru.qa.rococo.model.UserJson;
 import guru.qa.rococo.page.RegisterPage;
 import guru.qa.rococo.utils.RandomDataUtils;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -18,6 +18,7 @@ public class RegistrationTest {
     public static final String PASSWORD_LENGTH_ERROR = "Allowed password length should be from 3 to 12 characters";
     private final static String USERNAME_ALREADY_EXIST_ERROR = "Username `%s` already exists";
 
+    @DisplayName("WEB: Успешная регистрация нового пользователя")
     @Test
     void registerNewUserTest() {
         String username = RandomDataUtils.randomUsername();
@@ -25,9 +26,10 @@ public class RegistrationTest {
         Selenide.open(RegisterPage.URL, RegisterPage.class)
                 .doRegister(username, password, password)
                 .doLogin(username, password)
-                .checkPageIsLoaded();
+                .checkMainPageIsLoaded();
     }
 
+    @DisplayName("WEB: Ошибка при попытке регистрации существующим пользователем")
     @User
     @Test
     void registerExistingUserErrorTest(UserJson createdUser) {
@@ -41,6 +43,7 @@ public class RegistrationTest {
                 .checkErrorMessage(USERNAME_ALREADY_EXIST_ERROR.formatted(username));
     }
 
+    @DisplayName("WEB: Ошибка при регистрации, если пароль и подтверждение пароля не совпадают")
     @Test
     void passwordAndConfirmPasswordAreNotEqualTest() {
         String username = RandomDataUtils.randomUsername();
@@ -54,6 +57,7 @@ public class RegistrationTest {
                 .checkErrorMessage(PASSWORDS_SHOULD_BE_EQUAL_ERROR);
     }
 
+    @DisplayName("WEB: Ошибка при регистрации с некорректной длиной имени пользователя")
     @ParameterizedTest
     @ValueSource(strings = {
             "he",
@@ -68,6 +72,7 @@ public class RegistrationTest {
                 .checkErrorMessage(USERNAME_LENGTH_ERROR);
     }
 
+    @DisplayName("WEB: Ошибка при регистрации с некорректной длиной пароля")
     @ParameterizedTest
     @ValueSource(strings = {
             "he",

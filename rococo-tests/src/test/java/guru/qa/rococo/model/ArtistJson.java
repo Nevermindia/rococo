@@ -24,9 +24,21 @@ public class ArtistJson {
     @JsonProperty("photo")
     private String photo;
 
+    public ArtistJson(UUID id, String name, String biography, String photo) {
+        this.id = id;
+        this.name = name;
+        this.biography = biography;
+        this.photo = photo;
+    }
+
+    public ArtistJson() {
+
+    }
+
+
     public static ArtistJson fromGrpcMessage(ArtistResponse response) {
         ArtistJson artistJson = new ArtistJson();
-        artistJson.setId(fromString(response.getId().toStringUtf8()));
+        artistJson.setId(fromString(response.getId()));
         artistJson.setName(response.getName());
         artistJson.setBiography(response.getBiography());
         artistJson.setPhoto(response.getPhoto().toStringUtf8());

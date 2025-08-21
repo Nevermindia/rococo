@@ -5,6 +5,8 @@ import guru.qa.rococo.data.jpa.EntityManagerFactoryProvider;
 import guru.qa.rococo.data.jpa.JpaService;
 import guru.qa.rococo.data.model.PaintingEntity;
 
+import java.util.UUID;
+
 public class PaintingDAOHibernate extends JpaService {
     public PaintingDAOHibernate() {
         super(EntityManagerFactoryProvider.INSTANCE.getDataSource(DataBase.PAINTING).createEntityManager());
@@ -14,7 +16,12 @@ public class PaintingDAOHibernate extends JpaService {
         persist(painting);
     }
 
-    public void deletePainting(PaintingEntity painting) {
-        remove(painting);
+    public void deletePaintingById(UUID paintingId) {
+        tx(em -> {
+            PaintingEntity painting = em.find(PaintingEntity.class, paintingId);
+            if (painting != null) {
+                em.remove(painting);
+            }
+        });
     }
 }

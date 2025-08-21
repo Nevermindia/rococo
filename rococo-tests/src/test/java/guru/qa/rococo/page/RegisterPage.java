@@ -21,8 +21,7 @@ public class RegisterPage extends BasePage<RegisterPage> {
     private final SelenideElement signInBtn = $("a[data-testid='loginButton']");
     private final SelenideElement errorMessage = $(".form__error");
 
-    @Override
-    public RegisterPage checkPageIsLoaded() {
+    public RegisterPage checkRegisterPageIsLoaded() {
         usernameInput.shouldBe(visible);
         passwordInput.shouldBe(visible);
         signUpBtn.shouldBe(visible);

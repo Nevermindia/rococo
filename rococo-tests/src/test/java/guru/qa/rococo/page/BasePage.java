@@ -19,16 +19,14 @@ public abstract class BasePage<T extends BasePage<?>> {
     private final SelenideElement toastMessage = $(".toast");
     private final String fieldValidationError = "//span[@class='text-error-400'][text()='%s']";
 
-    public abstract T checkPageIsLoaded();
-
-    @Step("Check that toast message has text: {expectedText}")
+    @Step("Проверить отображение сообщения с текстом: {expectedText}")
     @Nonnull
     public T checkToastMessage(String expectedText) {
         toastMessage.should(visible).should(Condition.text(expectedText));
         return (T) this;
     }
 
-    @Step("Check that field validation has error message: {expectedText}")
+    @Step("Проверить ошибку в поле с текстом: {expectedText}")
     @Nonnull
     public T checkTextFieldErrorMessage(String expectedText) {
         $(By.xpath(String.format(fieldValidationError, expectedText))).should(visible);

@@ -44,13 +44,13 @@ public class ArtistEntity {
 
     public static ArtistEntity fromUpdateArtistGrpcMessage(UpdateArtistRequest request) {
         ArtistEntity entity = fromAddArtistGrpcMessage(request.getArtistData());
-        entity.setId(UUID.fromString(request.getId().toStringUtf8()));
+        entity.setId(UUID.fromString(request.getId()));
         return entity;
     }
 
     public static ArtistResponse toGrpcMessage(ArtistEntity entity) {
         return ArtistResponse.newBuilder()
-                .setId(copyFromUtf8(entity.getId().toString()))
+                .setId(entity.getId().toString())
                 .setName(entity.getName())
                 .setBiography(entity.getBiography())
                 .setPhoto(ByteString.copyFrom(entity.getPhoto()))

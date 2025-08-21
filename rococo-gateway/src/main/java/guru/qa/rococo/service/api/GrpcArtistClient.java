@@ -33,7 +33,7 @@ public class GrpcArtistClient {
 
     public @Nonnull ArtistJson getArtist(UUID id) {
         ArtistRequest request = ArtistRequest.newBuilder()
-                .setId(copyFromUtf8(id.toString()))
+                .setId(id.toString())
                 .build();
         try {
             ArtistResponse response = rococoArtistServiceStub.getArtist(request);
@@ -79,7 +79,7 @@ public class GrpcArtistClient {
     public @Nonnull ArtistJson updateArtist(ArtistJson artist) {
         AddArtistRequest artistData = ArtistJson.toGrpcMessage(artist);
         UpdateArtistRequest request = UpdateArtistRequest.newBuilder()
-                .setId(ByteString.copyFromUtf8(artist.id().toString()))
+                .setId(artist.id().toString())
                 .setArtistData(artistData)
                 .build();
         ArtistResponse response = rococoArtistServiceStub.updateArtist(request);
@@ -89,7 +89,7 @@ public class GrpcArtistClient {
     @Nonnull
     List<ArtistJson> getArtistByIds(Set<UUID> museumIds) {
         ArtistIdsRequest.Builder requestBuilder = ArtistIdsRequest.newBuilder();
-        museumIds.forEach(museumId -> requestBuilder.addId(ByteString.copyFromUtf8(museumId.toString())));
+        museumIds.forEach(museumId -> requestBuilder.addId(museumId.toString()));
         ArtistIdsRequest request = requestBuilder.build();
         try {
             AllArtistByIdsResponse response = rococoArtistServiceStub.getArtistByIds(request);

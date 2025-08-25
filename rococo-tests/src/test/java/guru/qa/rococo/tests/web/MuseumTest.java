@@ -42,7 +42,7 @@ public class MuseumTest {
         Selenide.open(MuseumsPage.URL, MuseumsPage.class)
                 .addMuseum()
                 .setName(name)
-                .selectCountry(RUSSIA.name())
+                .selectCountry("Россия")
                 .setCity("Санкт-Петербург")
                 .uploadPhoto(MUSEUM_IMAGE_PATH)
                 .setDescription(MUSEUM_DESCRIPTION)
@@ -61,7 +61,7 @@ public class MuseumTest {
         Selenide.open(MuseumsPage.URL, MuseumsPage.class)
                 .addMuseum()
                 .setName(name)
-                .selectCountry(RUSSIA.name())
+                .selectCountry("Россия")
                 .setCity("Санкт-Петербург")
                 .uploadPhoto(MUSEUM_IMAGE_PATH)
                 .setDescription(MUSEUM_DESCRIPTION)
@@ -78,7 +78,7 @@ public class MuseumTest {
         Selenide.open(MuseumsPage.URL, MuseumsPage.class)
                 .addMuseum()
                 .setName(name)
-                .selectCountry(RUSSIA.name())
+                .selectCountry("Россия")
                 .setCity("Санкт-Петербург")
                 .uploadPhoto(MUSEUM_IMAGE_PATH)
                 .setDescription(MUSEUM_DESCRIPTION)
@@ -95,7 +95,7 @@ public class MuseumTest {
         Selenide.open(MuseumsPage.URL, MuseumsPage.class)
                 .addMuseum()
                 .setName(randomMuseumTitle())
-                .selectCountry(RUSSIA.name())
+                .selectCountry("Россия")
                 .setCity(name)
                 .uploadPhoto(MUSEUM_IMAGE_PATH)
                 .setDescription(MUSEUM_DESCRIPTION)
@@ -129,7 +129,7 @@ public class MuseumTest {
         Selenide.open(MuseumsPage.URL, MuseumsPage.class)
                 .addMuseum()
                 .setName(randomMuseumTitle())
-                .selectCountry(RUSSIA.name())
+                .selectCountry("Россия")
                 .setCity("Омск")
                 .uploadPhoto(MUSEUM_IMAGE_PATH)
                 .setDescription(name)
@@ -146,7 +146,7 @@ public class MuseumTest {
         Selenide.open(MuseumsPage.URL, MuseumsPage.class)
                 .addMuseum()
                 .setName(randomMuseumTitle())
-                .selectCountry(RUSSIA.name())
+                .selectCountry("Россия")
                 .setCity("Омск")
                 .uploadPhoto(MUSEUM_IMAGE_PATH)
                 .setDescription(name)
@@ -185,7 +185,7 @@ public class MuseumTest {
     @DisplayName("WEB: Редактирование страны и города расположения музея")
     @ApiLogin(user = @User())
     @Museum
-    void editMuseumGeoLocationTest(@Token String token, MuseumJson museum) throws UnsupportedEncodingException {
+    void editMuseumGeoLocationTest(MuseumJson museum) throws UnsupportedEncodingException {
         String museumId = museum.getId().toString();
         String newCity = "Париж";
         String newCountry = FRANCE.getName();

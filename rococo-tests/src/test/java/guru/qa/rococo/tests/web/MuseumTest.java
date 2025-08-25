@@ -185,7 +185,7 @@ public class MuseumTest {
     @DisplayName("WEB: Редактирование страны и города расположения музея")
     @ApiLogin(user = @User())
     @Museum
-    void shouldBeAbleToEditMuseumGeoLocation(@Token String token, MuseumJson museum) throws UnsupportedEncodingException {
+    void editMuseumGeoLocationTest(@Token String token, MuseumJson museum) throws UnsupportedEncodingException {
         String museumId = museum.getId().toString();
         String newCity = "Париж";
         String newCountry = FRANCE.getName();
@@ -217,7 +217,7 @@ public class MuseumTest {
     @DisplayName("WEB: Редактирование изображения музея")
     @ApiLogin(user = @User())
     @Museum
-    void shouldBeAbleToEditMuseumPicture(BufferedImage image, MuseumJson museum) throws IOException {
+    void editMuseumPictureTest(BufferedImage image, MuseumJson museum) throws IOException {
         final String museumId = museum.getId().toString();
 
         Selenide.open(MuseumPage.url(museumId), MuseumPage.class)

@@ -28,6 +28,18 @@ public class PaintingJson {
     @JsonProperty("artist")
     private ArtistJson artist;
 
+    public PaintingJson(UUID id, String title, String description, String content, MuseumJson museum, ArtistJson artist) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.content = content;
+        this.museum = museum;
+        this.artist = artist;
+    }
+
+    public PaintingJson() {
+    }
+
     public static PaintingJson fromGrpcMessage(PaintingResponse paintingResponse) {
         ArtistJson artist = new ArtistJson();
         artist.setId(fromString(paintingResponse.getArtistId().getId().toStringUtf8()));

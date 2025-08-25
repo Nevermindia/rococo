@@ -1,13 +1,10 @@
-package guru.qa.rococo.tests.web;
+package guru.qa.rococo.jupiter.extension;
 
 import guru.qa.rococo.data.model.PaintingEntity;
 import guru.qa.rococo.data.repository.PaintingRepositoryHibernate;
 import guru.qa.rococo.jupiter.annotation.Artist;
 import guru.qa.rococo.jupiter.annotation.Museum;
 import guru.qa.rococo.jupiter.annotation.Painting;
-import guru.qa.rococo.jupiter.extension.ArtistExtension;
-import guru.qa.rococo.jupiter.extension.MuseumExtension;
-import guru.qa.rococo.jupiter.extension.TestMethodContextExtension;
 import guru.qa.rococo.model.ArtistJson;
 import guru.qa.rococo.model.MuseumJson;
 import guru.qa.rococo.model.PaintingJson;
@@ -19,6 +16,7 @@ import org.junit.platform.commons.support.AnnotationSupport;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import static guru.qa.rococo.utils.DefaultData.PAINTING_IMAGE_PATH;
 import static guru.qa.rococo.utils.RandomDataUtils.randomPaintingDescription;
 import static guru.qa.rococo.utils.RandomDataUtils.randomPaintingName;
 
@@ -26,20 +24,20 @@ import static guru.qa.rococo.utils.RandomDataUtils.randomPaintingName;
 public class PaintingExtension implements BeforeEachCallback, ParameterResolver, AfterEachCallback {
 
     public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(PaintingExtension.class);
-    private static final String PAINTING_PHOTO_PATH = "img/painting/bogatyry.jpg";
     private final PaintingRepositoryHibernate paintingRepository = new PaintingRepositoryHibernate();
 
     @Override
+    @Step("<БД> Создать картину")
     public void beforeEach(ExtensionContext context) throws Exception {
         AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), Painting.class)
                 .ifPresent(paintingAnno -> {
 
                     if (AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), Museum.class).isEmpty()) {
-                        throw new IllegalStateException("@TestMuseum should be present in case of @TestPainting");
+                        throw new IllegalStateException("@Museum should be present in case of @Painting");
                     }
 
                     if (AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), Artist.class).isEmpty()) {
-                        throw new IllegalStateException("@TestArtist should be present in case of @TestPainting");
+                        throw new IllegalStateException("@Artist should be present in case of @Painting");
                     }
 
                     final String title = "".equals(paintingAnno.title()) ?
@@ -47,7 +45,7 @@ public class PaintingExtension implements BeforeEachCallback, ParameterResolver,
                     final String description = "".equals(paintingAnno.description()) ?
                             randomPaintingDescription() : paintingAnno.description();
                     final String path = "".equals(paintingAnno.path()) ?
-                            PAINTING_PHOTO_PATH : paintingAnno.path();
+                            PAINTING_IMAGE_PATH : paintingAnno.path();
                     final MuseumJson museum = MuseumExtension.getMuseum();
                     final ArtistJson artist = ArtistExtension.getArtist();
                     String photoBase64 = ImageUtil.convertImageToBase64(path);
@@ -65,7 +63,7 @@ public class PaintingExtension implements BeforeEachCallback, ParameterResolver,
     }
 
     @Override
-    @Step("Remove created test painting")
+    @Step("<БД> Удалить картину")
     public void afterEach(ExtensionContext context) throws Exception {
         AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), Painting.class)
                 .ifPresent(paintingAnno -> paintingRepository.deletePaintingById(getPainting().getId()));

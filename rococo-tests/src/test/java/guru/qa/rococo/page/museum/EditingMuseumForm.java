@@ -12,12 +12,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import static com.codeborne.selenide.Selenide.$;
 
 @ParametersAreNonnullByDefault
-public class AddNewMuseumPage extends BasePage<AddNewMuseumPage> {
+public class EditingMuseumForm extends BasePage<EditingMuseumForm> {
 
     private final SelenideElement self = $("div.card form");
+    private final SelenideElement image = self.$("img");
+    private final SelenideElement imageInput = self.$("input[type='file']");
     private final SelenideElement nameInput = self.$("input[name='title']");
     private final SelenideElement countrySelect = self.$("select[name='countryId']");
-    private final SelenideElement imageInput = self.$("input[type='file']");
     private final SelenideElement cityInput = self.$("input[name='city']");
     private final SelenideElement description = self.$("textarea[name='description']");
     private final SelenideElement closeBtn = self.$(By.xpath("//button[text()='Закрыть']"));
@@ -25,9 +26,9 @@ public class AddNewMuseumPage extends BasePage<AddNewMuseumPage> {
 
     private final Select select = new Select(countrySelect);
 
-    @Step("Ввести имя музея: '{name}'")
+    @Step("Ввести имя: '{name}'")
     @Nonnull
-    public AddNewMuseumPage setName(String name) {
+    public EditingMuseumForm setName(String name) {
         nameInput.clear();
         nameInput.setValue(name);
         return this;
@@ -35,21 +36,21 @@ public class AddNewMuseumPage extends BasePage<AddNewMuseumPage> {
 
     @Step("Загрузить фото: '{path}'")
     @Nonnull
-    public AddNewMuseumPage uploadPhoto(String path) {
+    public EditingMuseumForm uploadPhoto(String path) {
         imageInput.uploadFromClasspath(path);
         return this;
     }
 
     @Step("Выбрать страну: '{countryName}'")
     @Nonnull
-    public AddNewMuseumPage selectCountry(String countryName) {
+    public EditingMuseumForm selectCountry(String countryName) {
         select.selectItem(countryName);
         return this;
     }
 
-    @Step("Выбрать город: '{cityName}'")
+    @Step("Ввести город: '{cityName}'")
     @Nonnull
-    public AddNewMuseumPage setCity(String cityName) {
+    public EditingMuseumForm setCity(String cityName) {
         cityInput.clear();
         cityInput.setValue(cityName);
         return this;
@@ -57,7 +58,7 @@ public class AddNewMuseumPage extends BasePage<AddNewMuseumPage> {
 
     @Step("Ввести описание: '{text}'")
     @Nonnull
-    public AddNewMuseumPage setDescription(String text) {
+    public EditingMuseumForm setDescription(String text) {
         description.clear();
         description.setValue(text);
         return this;
@@ -65,8 +66,8 @@ public class AddNewMuseumPage extends BasePage<AddNewMuseumPage> {
 
     @Step("Нажать кнопку 'Добавить'")
     @Nonnull
-    public MuseumsPage submitForm() {
+    public MuseumPage submitForm() {
         saveBtn.click();
-        return new MuseumsPage();
+        return new MuseumPage();
     }
 }

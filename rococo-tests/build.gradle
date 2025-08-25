@@ -3,10 +3,11 @@ buildscript {
         protobufVersion = '3.25.3'
         grpcVersion = '1.63.0'
         allureVersion = '2.29.1'
-        selenideVersion = '7.7.1'
+        selenideVersion = '7.10.0'
         atomicosVersion = '6.0.0'
         okhttp3Version = '4.11.0'
         springDataCommonsVersion = '3.3.3'
+        ashotVersion = '1.5.4'
     }
 }
 
@@ -73,6 +74,7 @@ dependencies {
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
     testImplementation 'commons-io:commons-io:2.11.0'
     testImplementation 'com.google.code.findbugs:jsr305:3.0.2'
+    testImplementation "ru.yandex.qatools.ashot:ashot:${ashotVersion}"
     // gRPC
     testImplementation "io.grpc:grpc-protobuf:${grpcVersion}"
     testImplementation "io.grpc:grpc-stub:${grpcVersion}"

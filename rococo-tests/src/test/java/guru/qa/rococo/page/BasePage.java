@@ -1,6 +1,7 @@
 package guru.qa.rococo.page;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import guru.qa.rococo.config.Config;
 import io.qameta.allure.Step;
@@ -30,6 +31,13 @@ public abstract class BasePage<T extends BasePage<?>> {
     @Nonnull
     public T checkTextFieldErrorMessage(String expectedText) {
         $(By.xpath(String.format(fieldValidationError, expectedText))).should(visible);
+        return (T) this;
+    }
+
+    @Step("Обновить страницу")
+    @Nonnull
+    public T refreshPage() {
+        Selenide.refresh();
         return (T) this;
     }
 }

@@ -25,6 +25,10 @@ public class RandomDataUtils {
         return faker.lorem().sentence(wordsCount);
     }
 
+    public static String randomString(int charCount) {
+        return faker.lorem().fixedString(charCount);
+    }
+
     public static String randomMuseumTitle() {
         return "Государственный музей №" + randomNumber(1, 9999);
     }

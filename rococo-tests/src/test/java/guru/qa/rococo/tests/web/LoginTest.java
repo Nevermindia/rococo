@@ -14,9 +14,9 @@ public class LoginTest {
     public static final String INCORRECT_CREDENTIALS_ERROR = "Неверные учетные данные пользователя";
     public static final String SESSION_IS_OVER = "Сессия завершена";
 
+    @Test
     @DisplayName("WEB: Успешная авторизация")
     @User
-    @Test
     public void successfulLoginTest(UserJson user) {
         Selenide.open(MainPage.URL, MainPage.class)
                 .checkMainPageIsLoaded()
@@ -26,8 +26,8 @@ public class LoginTest {
                 .getHeader().checkAvatarIsVisible();
     }
 
-    @DisplayName("WEB: Ошибка при авторизации неверными учетными данными")
     @Test
+    @DisplayName("WEB: Ошибка при авторизации неверными учетными данными")
     public void incorrectCredentialsTest() {
         String username = RandomDataUtils.randomUsername();
         String password = RandomDataUtils.randomPassword();
@@ -40,9 +40,9 @@ public class LoginTest {
                 .checkErrorMessage(INCORRECT_CREDENTIALS_ERROR);
     }
 
+    @Test
     @DisplayName("WEB: Успешный логаут")
     @User
-    @Test
     public void successfulLogoutTest(UserJson user) {
         Selenide.open(MainPage.URL, MainPage.class)
                 .checkMainPageIsLoaded()

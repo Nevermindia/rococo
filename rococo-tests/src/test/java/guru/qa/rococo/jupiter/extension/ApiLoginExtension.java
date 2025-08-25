@@ -47,10 +47,10 @@ public class ApiLoginExtension implements BeforeEachCallback, ParameterResolver 
 
                     if (("".equals(apiLogin.username()) || "".equals(apiLogin.password()))) {
                         if (apiLogin.user() == null) {
-                            throw new IllegalArgumentException("@TestUser or username/password should be provided for @ApiLogin");
+                            throw new IllegalArgumentException("@User or username/password should be provided for @ApiLogin");
                         }
                     } else if (apiLogin.user() != null && (!("".equals(apiLogin.username()) || "".equals(apiLogin.password())))) {
-                        throw new IllegalArgumentException("Both @TestUser and username/password should not be provided for @ApiLogin");
+                        throw new IllegalArgumentException("Both @User and username/password should not be provided for @ApiLogin");
                     }
 
                     if (apiLogin.user() != null && userByExtension != null) {

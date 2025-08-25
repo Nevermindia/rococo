@@ -8,7 +8,8 @@ import lombok.Setter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum Countries {
 
-    RUSSIA("Россия" );
+    RUSSIA("Россия" ),
+    FRANCE("Франция" );
 
     @Getter
     @Setter

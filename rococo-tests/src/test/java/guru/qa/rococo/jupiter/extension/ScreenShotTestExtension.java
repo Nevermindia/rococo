@@ -22,6 +22,7 @@ public class ScreenShotTestExtension implements ParameterResolver, TestExecution
 
     public static final ObjectMapper objectMapper = new ObjectMapper();
     public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(ScreenShotTestExtension.class);
+    public static final String ASSERT_SCREEN_MESSAGE = "Screen comparison failure";
 
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
@@ -39,7 +40,7 @@ public class ScreenShotTestExtension implements ParameterResolver, TestExecution
     @Override
     public void handleTestExecutionException(ExtensionContext context, Throwable throwable) throws Throwable {
 
-        if (throwable.getMessage().contains("Screen comparison failure")) {
+        if (throwable.getMessage().contains(ASSERT_SCREEN_MESSAGE)) {
             ScreenShotTest screenShotTest = context.getRequiredTestMethod().getAnnotation(ScreenShotTest.class);
             if (screenShotTest != null) {
                 if (screenShotTest.rewriteExpected()) {

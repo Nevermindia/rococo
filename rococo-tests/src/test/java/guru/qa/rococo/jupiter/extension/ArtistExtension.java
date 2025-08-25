@@ -14,6 +14,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import java.util.Optional;
 
+import static guru.qa.rococo.utils.DefaultData.ARTIST_IMAGE_PATH;
 import static guru.qa.rococo.utils.RandomDataUtils.randomArtistBio;
 import static guru.qa.rococo.utils.RandomDataUtils.randomArtistName;
 
@@ -21,11 +22,10 @@ import static guru.qa.rococo.utils.RandomDataUtils.randomArtistName;
 public class ArtistExtension implements BeforeEachCallback, AfterEachCallback, ParameterResolver {
 
     public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(ArtistExtension.class);
-    private static final String ARTIST_PHOTO_PATH = "img/artist/vasnecov.jpg";
     private final ArtistRepositoryHibernate artistRepository = new ArtistRepositoryHibernate();
 
     @Override
-    @Step("Create test artist")
+    @Step("<БД> Создать художника")
     public void beforeEach(ExtensionContext context) throws Exception {
         AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), Artist.class)
                 .ifPresent(artistAnno -> {
@@ -33,7 +33,7 @@ public class ArtistExtension implements BeforeEachCallback, AfterEachCallback, P
                             randomArtistName() : artistAnno.name();
                     final String bio = "".equals(artistAnno.bio()) ?
                             randomArtistBio() : artistAnno.bio();
-                    String photoBase64 = ImageUtil.convertImageToBase64(ARTIST_PHOTO_PATH);
+                    String photoBase64 = ImageUtil.convertImageToBase64(ARTIST_IMAGE_PATH);
                     ArtistEntity artist = new ArtistEntity();
                     artist.setName(name);
                     artist.setBiography(bio);
@@ -45,7 +45,7 @@ public class ArtistExtension implements BeforeEachCallback, AfterEachCallback, P
     }
 
     @Override
-    @Step("Remove created test artist")
+    @Step("<БД> Удалить художника")
     public void afterEach(ExtensionContext context) throws Exception {
         Optional<Artist> artistAnno =
                 AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), Artist.class);

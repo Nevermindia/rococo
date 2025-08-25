@@ -18,8 +18,8 @@ public class RegistrationTest {
     public static final String PASSWORD_LENGTH_ERROR = "Allowed password length should be from 3 to 12 characters";
     private final static String USERNAME_ALREADY_EXIST_ERROR = "Username `%s` already exists";
 
-    @DisplayName("WEB: Успешная регистрация нового пользователя")
     @Test
+    @DisplayName("WEB: Успешная регистрация нового пользователя")
     void registerNewUserTest() {
         String username = RandomDataUtils.randomUsername();
         String password = RandomDataUtils.randomPassword();
@@ -29,9 +29,9 @@ public class RegistrationTest {
                 .checkMainPageIsLoaded();
     }
 
+    @Test
     @DisplayName("WEB: Ошибка при попытке регистрации существующим пользователем")
     @User
-    @Test
     void registerExistingUserErrorTest(UserJson createdUser) {
         String username = createdUser.username();
         String password = createdUser.testData().password();
@@ -43,8 +43,8 @@ public class RegistrationTest {
                 .checkErrorMessage(USERNAME_ALREADY_EXIST_ERROR.formatted(username));
     }
 
-    @DisplayName("WEB: Ошибка при регистрации, если пароль и подтверждение пароля не совпадают")
     @Test
+    @DisplayName("WEB: Ошибка при регистрации, если пароль и подтверждение пароля не совпадают")
     void passwordAndConfirmPasswordAreNotEqualTest() {
         String username = RandomDataUtils.randomUsername();
         String password = RandomDataUtils.randomPassword();
@@ -57,8 +57,8 @@ public class RegistrationTest {
                 .checkErrorMessage(PASSWORDS_SHOULD_BE_EQUAL_ERROR);
     }
 
-    @DisplayName("WEB: Ошибка при регистрации с некорректной длиной имени пользователя")
     @ParameterizedTest
+    @DisplayName("WEB: Ошибка при регистрации с некорректной длиной имени пользователя")
     @ValueSource(strings = {
             "he",
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy"})
@@ -72,8 +72,8 @@ public class RegistrationTest {
                 .checkErrorMessage(USERNAME_LENGTH_ERROR);
     }
 
-    @DisplayName("WEB: Ошибка при регистрации с некорректной длиной пароля")
     @ParameterizedTest
+    @DisplayName("WEB: Ошибка при регистрации с некорректной длиной пароля")
     @ValueSource(strings = {
             "he",
             "X7fKpmO2c7xZ9"})

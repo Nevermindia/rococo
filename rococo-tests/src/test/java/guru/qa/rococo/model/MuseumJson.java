@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.protobuf.ByteString;
 import guru.qa.grpc.rococo.grpc.MuseumResponse;
 import guru.qa.rococo.data.model.MuseumEntity;
+import guru.qa.rococo.data.repository.GeoRepositoryHibernate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,17 @@ public class MuseumJson {
     @JsonProperty("geo")
     private GeoJson geo;
 
+    public MuseumJson(UUID id, String title, String description, String photo, GeoJson geo) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.photo = photo;
+        this.geo = geo;
+    }
+
+    public MuseumJson() {
+    }
+
     public static MuseumJson fromGrpcMessage(MuseumResponse museumResponse) {
         GeoJson geoJson = new GeoJson(
                 museumResponse.getGeo().getCity(),
@@ -40,7 +52,6 @@ public class MuseumJson {
 
     public static MuseumJson fromEntity(MuseumEntity entity) {
         MuseumJson museumJson = new MuseumJson();
-
         museumJson.setId(entity.getId());
         museumJson.setTitle(entity.getTitle());
         museumJson.setGeo(new GeoJson(entity.getCity(), new CountryJson(entity.getGeoId(), null)));

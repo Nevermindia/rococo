@@ -15,6 +15,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.UUID;
 
 import static guru.qa.rococo.model.Countries.RUSSIA;
+import static guru.qa.rococo.utils.DefaultData.CITY;
+import static guru.qa.rococo.utils.DefaultData.MUSEUM_IMAGE_PATH;
 import static guru.qa.rococo.utils.RandomDataUtils.randomMuseumDescription;
 import static guru.qa.rococo.utils.RandomDataUtils.randomMuseumTitle;
 
@@ -23,13 +25,11 @@ import static guru.qa.rococo.utils.RandomDataUtils.randomMuseumTitle;
 public class MuseumExtension implements BeforeEachCallback, AfterEachCallback, ParameterResolver {
 
     public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(MuseumExtension.class);
-    private static final String MUSEUM_PHOTO_PATH = "img/museum/pushkin_museum.jpg";
-    private static final String MUSEUM_CITY = "Санкт-Петербург";
     private final MuseumRepositoryHibernate museumRepository = new MuseumRepositoryHibernate();
     private final GeoRepositoryHibernate geoRepository = new GeoRepositoryHibernate();
 
     @Override
-    @Step("Create test museum")
+    @Step("<БД> Создать музей")
     public void beforeEach(ExtensionContext context) throws Exception {
         AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), Museum.class)
                 .ifPresent(museumAnno -> {
@@ -38,9 +38,9 @@ public class MuseumExtension implements BeforeEachCallback, AfterEachCallback, P
                     final String description = "".equals(museumAnno.description()) ?
                             randomMuseumDescription() : museumAnno.description();
                     final String photoPath = "".equals(museumAnno.path()) ?
-                            MUSEUM_PHOTO_PATH : museumAnno.path();
+                            MUSEUM_IMAGE_PATH : museumAnno.path();
                     final String city = "".equals(museumAnno.city()) ?
-                            MUSEUM_CITY : museumAnno.city();
+                            CITY : museumAnno.city();
                     final UUID countryId = RUSSIA.equals(museumAnno.country()) ?
                             geoRepository.getCountryByName(RUSSIA.getName()).getId()
                             : geoRepository.getCountryByName(museumAnno.country().getName()).getId();
@@ -59,7 +59,7 @@ public class MuseumExtension implements BeforeEachCallback, AfterEachCallback, P
     }
 
     @Override
-    @Step("Remove created test museum")
+    @Step("<БД> Удалить музей")
     public void afterEach(ExtensionContext context) throws Exception {
         AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), Museum.class).ifPresent(
                 museum -> {

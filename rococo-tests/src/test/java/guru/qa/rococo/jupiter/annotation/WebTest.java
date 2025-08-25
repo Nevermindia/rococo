@@ -2,7 +2,7 @@ package guru.qa.rococo.jupiter.annotation;
 
 
 import guru.qa.rococo.jupiter.extension.*;
-import guru.qa.rococo.tests.web.PaintingExtension;
+import guru.qa.rococo.jupiter.extension.PaintingExtension;
 import io.qameta.allure.junit5.AllureJunit5;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -20,7 +20,8 @@ import java.lang.annotation.Target;
         PaintingExtension.class,
         AllureJunit5.class,
         UserExtension.class,
-        ApiLoginExtension.class
+        ApiLoginExtension.class,
+        ScreenShotTestExtension.class
 })
 public @interface WebTest {
 }

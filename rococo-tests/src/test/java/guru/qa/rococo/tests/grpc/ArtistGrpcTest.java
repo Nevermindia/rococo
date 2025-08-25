@@ -138,16 +138,16 @@ public class ArtistGrpcTest extends BaseGrpcTest {
 
         ArtistResponse response = artistStub.updateArtist(updateArtistRequest);
 
-        step("Проверить id в ответе", () ->
+        step("Проверить, что в ответе получен обновленный id", () ->
                 assertEquals(createdArtist.getId(), fromString(response.getId()))
         );
-        step("Проверить имя в ответе", () ->
+        step("Проверить, что в ответе получен обновленное имя", () ->
                 assertEquals(newName, response.getName())
         );
-        step("Проверить биографию в ответе", () ->
+        step("Проверить, что в ответе получен обновленная биография", () ->
                 assertEquals(newBiography, response.getBiography())
         );
-        step("Проверить фото в ответе", () ->
+        step("Проверить, что в ответе получен обновленное фото", () ->
                 assertEquals(convertImageToBase64(ARTIST_IMAGE_PATH), response.getPhoto().toStringUtf8())
         );
     }

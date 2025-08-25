@@ -41,4 +41,6 @@ public class DefaultData {
             Алёша Попович (справа) — смекалка и удаль.
             Картина стала олицетворением могущества, сплоченности и народного духа России.
             """;
+
+    public static final String PROFILE_IMAGE_PATH = "img/profile/avatar.jpg";
 }

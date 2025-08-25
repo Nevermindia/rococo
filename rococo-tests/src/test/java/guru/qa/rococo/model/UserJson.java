@@ -3,6 +3,7 @@ package guru.qa.rococo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonInclude;

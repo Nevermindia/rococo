@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import static guru.qa.rococo.utils.DefaultData.PROFILE_IMAGE_PATH;
 import static guru.qa.rococo.utils.RandomDataUtils.randomName;
 
 @WebTest
@@ -42,14 +43,13 @@ public class ProfileTest {
 
     @ScreenShotTest(value = "avatar_expected.png")
     @DisplayName("WEB: Загрузка фото профиля")
-    @ApiLogin(user = @User())
+    @ApiLogin(user = @User)
     void updateProfileWithAnImage(BufferedImage expectedAvatar) throws IOException {
-        String path = "img/profile/avatar.jpg";
 
         Selenide.open(MainPage.URL, MainPage.class)
                 .getHeader()
                 .openProfilePage()
-                .uploadPhoto(path)
+                .uploadPhoto(PROFILE_IMAGE_PATH)
                 .save()
                 .checkToastMessage(PROFILE_MSG)
                 .refreshPage()

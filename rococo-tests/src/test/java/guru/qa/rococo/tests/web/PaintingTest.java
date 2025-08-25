@@ -27,8 +27,8 @@ public class PaintingTest {
 
     @Test
     @DisplayName("WEB: Добавление картины")
-    @Museum()
-    @Artist()
+    @Museum
+    @Artist
     @ApiLogin(user = @User())
     void addNewPaintingTest(MuseumJson museum, ArtistJson artist) {
         final String paintingName = randomPaintingName();
@@ -188,7 +188,7 @@ public class PaintingTest {
     @ApiLogin(user = @User())
     @Museum
     @Artist
-    @Painting()
+    @Painting
     void editPaintingPicture(BufferedImage expectedAvatar, PaintingJson painting) throws IOException {
         String path = "img/painting/nighthawks.jpg";
 

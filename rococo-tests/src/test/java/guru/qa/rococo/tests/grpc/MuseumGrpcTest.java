@@ -40,7 +40,7 @@ public class MuseumGrpcTest extends BaseGrpcTest {
 
     @Test
     @DisplayName("GRPC: Получение информации о музее из rococo-museum")
-    @Museum()
+    @Museum
     void getMuseumDataTest(MuseumJson createdMuseum) {
         String createdMuseumId = createdMuseum.getId().toString();
         MuseumRequest request = MuseumRequest.newBuilder()
@@ -60,14 +60,14 @@ public class MuseumGrpcTest extends BaseGrpcTest {
                 .setId(copyFromUtf8(notExistingId))
                 .build();
 
-        final StatusRuntimeException exception = assertThrows(StatusRuntimeException.class, () -> museumStub.getMuseum(request));
+        StatusRuntimeException exception = assertThrows(StatusRuntimeException.class, () -> museumStub.getMuseum(request));
 
         assertEquals(Status.NOT_FOUND.getCode(), exception.getStatus().getCode());
         assertEquals("Museum not found by id: " + notExistingId, exception.getStatus().getDescription());
     }
 
     @Test
-    @Museum()
+    @Museum
     @DisplayName("GRPC: Фильтрация списка музеев по названию")
     void filterByTitleTest(MuseumJson createdMuseum) {
         String museumTitle = createdMuseum.getTitle();
@@ -77,7 +77,7 @@ public class MuseumGrpcTest extends BaseGrpcTest {
                 .setSize(10)
                 .build();
 
-        final MuseumResponse museumResponse = museumStub.getAllMuseum(request).getMuseum(0);
+        MuseumResponse museumResponse = museumStub.getAllMuseum(request).getMuseum(0);
 
         step("Check museum in response", () -> assertEquals(createdMuseum, fromGrpcMessage(museumResponse)));
     }
@@ -92,7 +92,7 @@ public class MuseumGrpcTest extends BaseGrpcTest {
                 .setSize(10)
                 .build();
 
-        final AllMuseumResponse response = museumStub.getAllMuseum(request);
+        AllMuseumResponse response = museumStub.getAllMuseum(request);
 
         step("Проверить, что в ответе получен пустой список", () -> {
             assertEquals(0, response.getMuseumList().size());
@@ -117,7 +117,7 @@ public class MuseumGrpcTest extends BaseGrpcTest {
                 .setGeo(geo)
                 .build();
 
-        final MuseumResponse response = museumStub.addMuseum(addMuseumRequest);
+        MuseumResponse response = museumStub.addMuseum(addMuseumRequest);
 
         step("Проверить, что в ответе получен id созданного музея", () ->
                 assertTrue(response.getId().toStringUtf8().matches(ID_REGEXP))
@@ -125,7 +125,7 @@ public class MuseumGrpcTest extends BaseGrpcTest {
     }
 
     @Test
-    @Museum()
+    @Museum
     @DisplayName("GRPC: Обновление музея в rococo-museum")
     void updateMuseumTest(MuseumJson createdMuseum) {
         String newTitle = randomMuseumTitle();
@@ -146,7 +146,7 @@ public class MuseumGrpcTest extends BaseGrpcTest {
                 .setMuseumData(museumData)
                 .build();
 
-        final MuseumResponse response = museumStub.updateMuseum(updateMuseumRequest);
+        MuseumResponse response = museumStub.updateMuseum(updateMuseumRequest);
 
         step("Проверить, что в ответе получен обновленный id", () ->
                 assertEquals(createdMuseum.getId(), fromString(response.getId().toStringUtf8()))

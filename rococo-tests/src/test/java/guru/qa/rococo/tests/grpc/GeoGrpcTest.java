@@ -41,7 +41,7 @@ public class GeoGrpcTest extends BaseGrpcTest {
                 .setId(copyFromUtf8(country.id().toString()))
                 .build();
 
-        final CountryResponse countryResponse = geoStub.getCountry(request);
+        CountryResponse countryResponse = geoStub.getCountry(request);
 
         step("Проверить название страны в ответе", () -> assertEquals(country.name(), countryResponse.getName()));
         step("Проверить id страны в ответе", () -> assertEquals(country.id(), UUID.fromString(countryResponse.getId().toStringUtf8())));
@@ -55,7 +55,7 @@ public class GeoGrpcTest extends BaseGrpcTest {
                 .setName(country.name())
                 .build();
 
-        final CountryResponse countryResponse = geoStub.getCountryByName(request);
+        CountryResponse countryResponse = geoStub.getCountryByName(request);
 
         step("Проверить название страны в ответе", () -> assertEquals(country.name(), countryResponse.getName()));
         step("Проверить id страны в ответе", () -> assertEquals(country.id(), UUID.fromString(countryResponse.getId().toStringUtf8())));
@@ -69,7 +69,7 @@ public class GeoGrpcTest extends BaseGrpcTest {
                 .setId(ByteString.copyFromUtf8(notExistingId))
                 .build();
 
-        final StatusRuntimeException exception = assertThrows(StatusRuntimeException.class, () -> geoStub.getCountry(request));
+        StatusRuntimeException exception = assertThrows(StatusRuntimeException.class, () -> geoStub.getCountry(request));
 
         assertEquals(Status.NOT_FOUND.getCode(), exception.getStatus().getCode());
         assertEquals("Country not found by id: " + notExistingId, exception.getStatus().getDescription());
@@ -83,7 +83,7 @@ public class GeoGrpcTest extends BaseGrpcTest {
                 .setName(notExistingCountryName)
                 .build();
 
-        final StatusRuntimeException exception = assertThrows(StatusRuntimeException.class, () -> geoStub.getCountryByName(request));
+        StatusRuntimeException exception = assertThrows(StatusRuntimeException.class, () -> geoStub.getCountryByName(request));
 
         assertEquals(Status.NOT_FOUND.getCode(), exception.getStatus().getCode());
         assertEquals("Country not found by name: " + notExistingCountryName, exception.getStatus().getDescription());
@@ -97,10 +97,10 @@ public class GeoGrpcTest extends BaseGrpcTest {
                 .setSize(20)
                 .build();
 
-        final AllCountryResponse response = geoStub.getAllCountry(request);
+        AllCountryResponse response = geoStub.getAllCountry(request);
         assertEquals(20, response.getCountryCount());
 
-        final CountryResponse country = response.getCountry(0);
+        CountryResponse country = response.getCountry(0);
         assertEquals("Австралия", country.getName());
         assertTrue(country.getId().toStringUtf8().matches(ID_REGEXP));
     }

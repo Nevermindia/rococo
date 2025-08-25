@@ -1,6 +1,11 @@
 package guru.qa.rococo.utils;
 
 import com.github.javafaker.Faker;
+import guru.qa.rococo.data.repository.GeoRepositoryHibernate;
+import guru.qa.rococo.model.CountryJson;
+
+import java.util.List;
+import java.util.Random;
 
 public class RandomDataUtils {
     private static final Faker faker = new Faker();
@@ -55,5 +60,18 @@ public class RandomDataUtils {
 
     public static int randomNumber(int min, int max) {
         return faker.number().numberBetween(min, max);
+    }
+
+    public static CountryJson getRandomCountry() {
+        GeoRepositoryHibernate geoRepository = new GeoRepositoryHibernate();
+
+        List<CountryJson> countryName = geoRepository.getAllCountry().stream().map(CountryJson::fromEntity).toList();
+        Random random = new Random();
+        int randomIndex = random.nextInt(countryName.size());
+        return countryName.get(randomIndex);
+    }
+
+    public static String getRandomCityName() {
+        return faker.address().cityName();
     }
 }

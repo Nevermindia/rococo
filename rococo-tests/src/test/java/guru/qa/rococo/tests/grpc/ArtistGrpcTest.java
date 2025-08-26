@@ -39,7 +39,7 @@ public class ArtistGrpcTest extends BaseGrpcTest {
     @Test
     @DisplayName("GRPC: Получение информации о художнике из rococo-artist")
     @Artist
-    void returnArtistDataFromDBTest(ArtistJson createdArtist) {
+    void returnArtistDataTest(ArtistJson createdArtist) {
         String createdArtistId = createdArtist.getId().toString();
         ArtistRequest request = ArtistRequest.newBuilder()
                 .setId(createdArtistId)

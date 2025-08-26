@@ -1,8 +1,8 @@
 package guru.qa.rococo.jupiter.extension;
 
 import guru.qa.rococo.data.model.MuseumEntity;
-import guru.qa.rococo.data.repository.GeoRepositoryHibernate;
-import guru.qa.rococo.data.repository.MuseumRepositoryHibernate;
+import guru.qa.rococo.data.repo.GeoRepositoryHibernate;
+import guru.qa.rococo.data.repo.MuseumRepositoryHibernate;
 import guru.qa.rococo.jupiter.annotation.Museum;
 import guru.qa.rococo.model.MuseumJson;
 import guru.qa.rococo.utils.ImageUtil;
@@ -52,7 +52,7 @@ public class MuseumExtension implements BeforeEachCallback, AfterEachCallback, P
                     museum.setPhoto(photoBase64.getBytes());
                     museum.setGeoId(countryId);
 
-                    MuseumEntity museumForTest = museumRepository.createMuseumForTest(museum);
+                    MuseumEntity museumForTest = museumRepository.createMuseum(museum);
                     museum.setId(museumForTest.getId());
                     setMuseum(MuseumJson.fromEntity(museum));
                 });

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.protobuf.ByteString;
 import guru.qa.grpc.rococo.grpc.MuseumResponse;
 import guru.qa.rococo.data.model.MuseumEntity;
-import guru.qa.rococo.data.repository.GeoRepositoryHibernate;
 import lombok.Getter;
 import lombok.Setter;
 

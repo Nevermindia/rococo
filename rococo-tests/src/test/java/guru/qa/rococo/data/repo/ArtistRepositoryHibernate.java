@@ -1,26 +1,25 @@
-package guru.qa.rococo.data.dao;
+package guru.qa.rococo.data.repo;
 
-import guru.qa.rococo.data.DataBase;
-import guru.qa.rococo.data.jpa.EntityManagerFactoryProvider;
-import guru.qa.rococo.data.jpa.JpaService;
+import guru.qa.rococo.config.Config;
 import guru.qa.rococo.data.model.ArtistEntity;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-public class ArtistDAOHibernate extends JpaService {
-    public ArtistDAOHibernate() {
-        super(EntityManagerFactoryProvider.INSTANCE.getDataSource(DataBase.ARTIST).createEntityManager());
+public class ArtistRepositoryHibernate extends BaseRepository {
+
+    public ArtistRepositoryHibernate() {
+        super(Config.getInstance().artistJdbcUrl());
     }
 
     @Transactional
     public void createArtist(ArtistEntity artist) {
-        persist(artist);
+        tx.execute(() -> em.persist(artist));
     }
 
     @Transactional
     public void deleteArtistById(UUID artistId) {
-        tx(em -> {
+        tx.execute(() -> {
             ArtistEntity artist = em.find(ArtistEntity.class, artistId);
             if (artist != null) {
                 em.remove(artist);

@@ -24,6 +24,24 @@ public interface Config {
     String gatewayUrl();
 
     @Nonnull
+    String authJdbcUrl();
+
+    @Nonnull
+    String artistJdbcUrl();
+
+    @Nonnull
+    String paintingJdbcUrl();
+
+    @Nonnull
+    String museumJdbcUrl();
+
+    @Nonnull
+    String userdataJdbcUrl();
+
+    @Nonnull
+    String geoJdbcUrl();
+
+    @Nonnull
     String databaseAddress();
 
     default String databaseUser() {

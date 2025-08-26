@@ -1,24 +1,22 @@
-package guru.qa.rococo.data.repository;
+package guru.qa.rococo.data.repo;
 
-import guru.qa.rococo.data.dao.AuthUserDAOHibernate;
-import guru.qa.rococo.data.dao.UserDataDAOHibernate;
 import guru.qa.rococo.data.model.AuthUserEntity;
 import guru.qa.rococo.data.model.UserDataEntity;
 
 public class UserRepositoryHibernate {
-    private final AuthUserDAOHibernate authUserDAO;
-    private final UserDataDAOHibernate userDataDAO;
+    private final AuthUserRepositoryHibernate authUserDAO;
+    private final UserDataRepositoryHibernate userDataDAO;
 
     public UserRepositoryHibernate() {
-        this(new AuthUserDAOHibernate(), new UserDataDAOHibernate());
+        this(new AuthUserRepositoryHibernate(), new UserDataRepositoryHibernate());
     }
 
-    public UserRepositoryHibernate(AuthUserDAOHibernate authUserDAO, UserDataDAOHibernate userDataDAO) {
+    public UserRepositoryHibernate(AuthUserRepositoryHibernate authUserDAO, UserDataRepositoryHibernate userDataDAO) {
         this.authUserDAO = authUserDAO;
         this.userDataDAO = userDataDAO;
     }
 
-    public void createUserForTest(AuthUserEntity user) {
+    public void createUser(AuthUserEntity user) {
         this.authUserDAO.createUser(user);
         this.userDataDAO.createUserInUserData(fromAuthUser(user));
     }

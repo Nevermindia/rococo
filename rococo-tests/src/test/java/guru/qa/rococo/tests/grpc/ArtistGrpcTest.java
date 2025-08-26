@@ -1,7 +1,9 @@
 package guru.qa.rococo.tests.grpc;
 
 import guru.qa.grpc.rococo.grpc.*;
+import guru.qa.rococo.config.Config;
 import guru.qa.rococo.jupiter.annotation.Artist;
+import guru.qa.rococo.jupiter.annotation.GrpcTest;
 import guru.qa.rococo.model.ArtistJson;
 import io.grpc.Channel;
 import io.grpc.ManagedChannelBuilder;
@@ -16,14 +18,17 @@ import java.util.UUID;
 import static com.google.protobuf.ByteString.copyFromUtf8;
 import static guru.qa.rococo.model.ArtistJson.fromGrpcMessage;
 import static guru.qa.rococo.utils.DefaultData.ARTIST_IMAGE_PATH;
+import static guru.qa.rococo.utils.DefaultData.ID_REGEXP;
 import static guru.qa.rococo.utils.ImageUtil.convertImageToBase64;
 import static guru.qa.rococo.utils.RandomDataUtils.*;
 import static io.qameta.allure.Allure.step;
 import static java.util.UUID.fromString;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ArtistGrpcTest extends BaseGrpcTest {
+@GrpcTest
+public class ArtistGrpcTest {
 
+    private static final Config CFG = Config.getInstance();
     private static final Channel artistChannel;
 
     static {

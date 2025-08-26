@@ -4,6 +4,8 @@ import guru.qa.grpc.rococo.grpc.RococoUserdataServiceGrpc;
 import guru.qa.grpc.rococo.grpc.UpdateUserRequest;
 import guru.qa.grpc.rococo.grpc.UserRequest;
 import guru.qa.grpc.rococo.grpc.UserResponse;
+import guru.qa.rococo.config.Config;
+import guru.qa.rococo.jupiter.annotation.GrpcTest;
 import guru.qa.rococo.jupiter.annotation.User;
 import guru.qa.rococo.model.UserJson;
 import io.grpc.Channel;
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.google.protobuf.ByteString.copyFromUtf8;
+import static guru.qa.rococo.utils.DefaultData.ID_REGEXP;
 import static guru.qa.rococo.utils.DefaultData.PROFILE_IMAGE_PATH;
 import static guru.qa.rococo.utils.ImageUtil.convertImageToBase64;
 import static guru.qa.rococo.utils.RandomDataUtils.randomName;
@@ -21,8 +24,10 @@ import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("GRPC: Данные пользователя")
-public class UserdataGrpcTest extends BaseGrpcTest {
+@GrpcTest
+public class UserdataGrpcTest {
+
+    private static final Config CFG = Config.getInstance();
     private static final Channel userdataChannel;
 
     static {

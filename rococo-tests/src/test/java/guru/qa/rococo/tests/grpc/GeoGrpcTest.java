@@ -2,6 +2,8 @@ package guru.qa.rococo.tests.grpc;
 
 import com.google.protobuf.ByteString;
 import guru.qa.grpc.rococo.grpc.*;
+import guru.qa.rococo.config.Config;
+import guru.qa.rococo.jupiter.annotation.GrpcTest;
 import guru.qa.rococo.model.CountryJson;
 import io.grpc.Channel;
 import io.grpc.ManagedChannelBuilder;
@@ -14,13 +16,16 @@ import org.junit.jupiter.api.Test;
 import java.util.UUID;
 
 import static com.google.protobuf.ByteString.copyFromUtf8;
+import static guru.qa.rococo.utils.DefaultData.ID_REGEXP;
 import static guru.qa.rococo.utils.RandomDataUtils.getRandomCountry;
 import static guru.qa.rococo.utils.RandomDataUtils.randomName;
 import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GeoGrpcTest extends BaseGrpcTest {
+@GrpcTest
+public class GeoGrpcTest {
 
+    private static final Config CFG = Config.getInstance();
     private static final Channel geoChannel;
 
     static {

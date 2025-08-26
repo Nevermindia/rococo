@@ -2,6 +2,8 @@ package guru.qa.rococo.tests.grpc;
 
 import com.google.protobuf.ByteString;
 import guru.qa.grpc.rococo.grpc.*;
+import guru.qa.rococo.config.Config;
+import guru.qa.rococo.jupiter.annotation.GrpcTest;
 import guru.qa.rococo.jupiter.annotation.Museum;
 import guru.qa.rococo.model.MuseumJson;
 import io.grpc.Channel;
@@ -16,16 +18,17 @@ import java.util.UUID;
 
 import static com.google.protobuf.ByteString.copyFromUtf8;
 import static guru.qa.rococo.model.MuseumJson.fromGrpcMessage;
-import static guru.qa.rococo.utils.DefaultData.MUSEUM_IMAGE_PATH;
-import static guru.qa.rococo.utils.DefaultData.MUSEUM_IMAGE_PATH_NEW;
+import static guru.qa.rococo.utils.DefaultData.*;
 import static guru.qa.rococo.utils.ImageUtil.convertImageToBase64;
 import static guru.qa.rococo.utils.RandomDataUtils.*;
 import static io.qameta.allure.Allure.step;
 import static java.util.UUID.fromString;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MuseumGrpcTest extends BaseGrpcTest {
+@GrpcTest
+public class MuseumGrpcTest {
 
+    private static final Config CFG = Config.getInstance();
     private static final Channel museumChannel;
 
     static {

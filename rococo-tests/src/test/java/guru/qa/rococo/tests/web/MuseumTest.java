@@ -1,7 +1,7 @@
 package guru.qa.rococo.tests.web;
 
 import com.codeborne.selenide.Selenide;
-import guru.qa.rococo.data.repository.GeoRepositoryHibernate;
+import guru.qa.rococo.data.repo.GeoRepositoryHibernate;
 import guru.qa.rococo.jupiter.annotation.*;
 import guru.qa.rococo.model.CountryJson;
 import guru.qa.rococo.model.GeoJson;

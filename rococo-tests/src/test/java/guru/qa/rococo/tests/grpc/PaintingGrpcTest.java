@@ -1,7 +1,9 @@
 package guru.qa.rococo.tests.grpc;
 
 import guru.qa.grpc.rococo.grpc.*;
+import guru.qa.rococo.config.Config;
 import guru.qa.rococo.jupiter.annotation.Artist;
+import guru.qa.rococo.jupiter.annotation.GrpcTest;
 import guru.qa.rococo.jupiter.annotation.Museum;
 import guru.qa.rococo.jupiter.annotation.Painting;
 import guru.qa.rococo.model.ArtistJson;
@@ -19,8 +21,7 @@ import java.util.UUID;
 
 import static com.google.protobuf.ByteString.copyFromUtf8;
 import static guru.qa.rococo.model.PaintingJson.fromGrpcMessage;
-import static guru.qa.rococo.utils.DefaultData.PAINTING_IMAGE_PATH;
-import static guru.qa.rococo.utils.DefaultData.PAINTING_IMAGE_PATH_NEW;
+import static guru.qa.rococo.utils.DefaultData.*;
 import static guru.qa.rococo.utils.ImageUtil.convertImageToBase64;
 import static guru.qa.rococo.utils.RandomDataUtils.randomPaintingName;
 import static guru.qa.rococo.utils.RandomDataUtils.randomSentence;
@@ -29,9 +30,10 @@ import static java.util.UUID.fromString;
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("GRPC: Картины")
-public class PaintingGrpcTest extends BaseGrpcTest {
+@GrpcTest
+public class PaintingGrpcTest {
 
+    private static final Config CFG = Config.getInstance();
     private static final Channel paintingChannel;
 
     static {

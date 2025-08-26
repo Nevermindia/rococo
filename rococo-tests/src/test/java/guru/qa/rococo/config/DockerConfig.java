@@ -37,6 +37,42 @@ enum DockerConfig implements Config {
         return "http://gateway.rococo.dc:8090/";
     }
 
+    @NotNull
+    @Override
+    public String authJdbcUrl() {
+        return "";
+    }
+
+    @NotNull
+    @Override
+    public String artistJdbcUrl() {
+        return "";
+    }
+
+    @NotNull
+    @Override
+    public String paintingJdbcUrl() {
+        return "";
+    }
+
+    @NotNull
+    @Override
+    public String museumJdbcUrl() {
+        return "";
+    }
+
+    @NotNull
+    @Override
+    public String userdataJdbcUrl() {
+        return "";
+    }
+
+    @NotNull
+    @Override
+    public String geoJdbcUrl() {
+        return "";
+    }
+
     @Override
     public String userdataGrpcAddress() {
         return "userdata.rococo.dc";

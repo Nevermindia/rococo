@@ -1,7 +1,7 @@
 package guru.qa.rococo.jupiter.extension;
 
+import guru.qa.rococo.data.repo.ArtistRepositoryHibernate;
 import guru.qa.rococo.data.model.ArtistEntity;
-import guru.qa.rococo.data.repository.ArtistRepositoryHibernate;
 import guru.qa.rococo.jupiter.annotation.Artist;
 import guru.qa.rococo.model.ArtistJson;
 import guru.qa.rococo.utils.ImageUtil;
@@ -39,7 +39,7 @@ public class ArtistExtension implements BeforeEachCallback, AfterEachCallback, P
                     artist.setBiography(bio);
                     artist.setPhoto(photoBase64.getBytes());
 
-                    artistRepository.createArtistForTest(artist);
+                    artistRepository.createArtist(artist);
                     setArtist(ArtistJson.fromEntity(artist));
                 });
     }

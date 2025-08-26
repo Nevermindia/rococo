@@ -1,26 +1,25 @@
-package guru.qa.rococo.data.dao;
+package guru.qa.rococo.data.repo;
 
-import guru.qa.rococo.data.DataBase;
-import guru.qa.rococo.data.jpa.EntityManagerFactoryProvider;
-import guru.qa.rococo.data.jpa.JpaService;
+import guru.qa.rococo.config.Config;
 import guru.qa.rococo.data.model.PaintingEntity;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-public class PaintingDAOHibernate extends JpaService {
-    public PaintingDAOHibernate() {
-        super(EntityManagerFactoryProvider.INSTANCE.getDataSource(DataBase.PAINTING).createEntityManager());
+public class PaintingRepositoryHibernate extends BaseRepository {
+
+    public PaintingRepositoryHibernate() {
+        super(Config.getInstance().paintingJdbcUrl());
     }
 
     @Transactional
     public void createPainting(PaintingEntity painting) {
-        persist(painting);
+        tx.execute(() -> em.persist(painting));
     }
 
     @Transactional
     public void deletePaintingById(UUID paintingId) {
-        tx(em -> {
+        tx.execute(() -> {
             PaintingEntity painting = em.find(PaintingEntity.class, paintingId);
             if (painting != null) {
                 em.remove(painting);

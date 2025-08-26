@@ -1,20 +1,17 @@
-package guru.qa.rococo.data.dao;
+package guru.qa.rococo.data.repo;
 
-import guru.qa.rococo.data.DataBase;
-import guru.qa.rococo.data.jpa.EntityManagerFactoryProvider;
-import guru.qa.rococo.data.jpa.JpaService;
+import guru.qa.rococo.config.Config;
 import guru.qa.rococo.data.model.CountryEntity;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
 
-public class GeoDAOHibernate extends JpaService {
+public class GeoRepositoryHibernate extends BaseRepository {
 
-    public GeoDAOHibernate() {
-        super(EntityManagerFactoryProvider.INSTANCE.getDataSource(DataBase.GEO).createEntityManager());
+    public GeoRepositoryHibernate() {
+        super(Config.getInstance().geoJdbcUrl());
     }
-
 
     @Transactional
     public CountryEntity getCountryById(UUID countryId) {
@@ -25,7 +22,7 @@ public class GeoDAOHibernate extends JpaService {
 
 
     @Transactional
-    public CountryEntity getCountryName(String countryName) {
+    public CountryEntity getCountryByName(String countryName) {
         return em.createQuery("select country from CountryEntity country where country.name=:countryName", CountryEntity.class)
                 .setParameter("countryName", countryName)
                 .getSingleResult();

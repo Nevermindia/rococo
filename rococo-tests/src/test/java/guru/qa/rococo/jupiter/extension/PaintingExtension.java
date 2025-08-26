@@ -1,7 +1,7 @@
 package guru.qa.rococo.jupiter.extension;
 
 import guru.qa.rococo.data.model.PaintingEntity;
-import guru.qa.rococo.data.repository.PaintingRepositoryHibernate;
+import guru.qa.rococo.data.repo.PaintingRepositoryHibernate;
 import guru.qa.rococo.jupiter.annotation.Artist;
 import guru.qa.rococo.jupiter.annotation.Museum;
 import guru.qa.rococo.jupiter.annotation.Painting;
@@ -56,7 +56,7 @@ public class PaintingExtension implements BeforeEachCallback, ParameterResolver,
                     painting.setMuseumId(museum.getId());
                     painting.setArtistId(artist.getId());
 
-                    paintingRepository.createPaintingForTest(painting);
+                    paintingRepository.createPainting(painting);
 
                     context.getStore(NAMESPACE).put(context.getUniqueId(), PaintingJson.fromEntity(painting));
                 });

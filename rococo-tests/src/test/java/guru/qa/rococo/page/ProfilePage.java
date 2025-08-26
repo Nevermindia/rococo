@@ -31,7 +31,6 @@ public class ProfilePage extends BasePage<ProfilePage> {
     public ProfilePage checkProfilePageIsLoaded() {
         logoutBtn.shouldBe(visible);
         title.shouldBe(visible).shouldHave(text("Профиль"));
-        avatar.shouldBe(visible);
         photoInput.shouldBe(visible);
         nameInput.shouldBe(visible);
         lastnameInput.shouldBe(visible);

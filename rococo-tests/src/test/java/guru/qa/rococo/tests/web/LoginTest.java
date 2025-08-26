@@ -54,5 +54,4 @@ public class LoginTest {
                 .checkToastMessage(SESSION_IS_OVER)
                 .getHeader().checkLoginBtnIsVisible();
     }
-
 }

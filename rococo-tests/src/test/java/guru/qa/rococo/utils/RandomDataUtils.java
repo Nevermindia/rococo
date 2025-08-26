@@ -1,7 +1,7 @@
 package guru.qa.rococo.utils;
 
 import com.github.javafaker.Faker;
-import guru.qa.rococo.data.repository.GeoRepositoryHibernate;
+import guru.qa.rococo.data.repo.GeoRepositoryHibernate;
 import guru.qa.rococo.model.CountryJson;
 
 import java.util.List;

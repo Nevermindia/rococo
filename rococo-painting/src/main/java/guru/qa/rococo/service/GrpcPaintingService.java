@@ -8,6 +8,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -24,6 +25,7 @@ public class GrpcPaintingService extends RococoPaintingServiceGrpc.RococoPaintin
         this.paintingRepository = paintingRepository;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void getPainting(PaintingRequest request, StreamObserver<PaintingResponse> responseObserver) {
         UUID paintingId = fromString(request.getId().toStringUtf8());
@@ -42,6 +44,7 @@ public class GrpcPaintingService extends RococoPaintingServiceGrpc.RococoPaintin
                 );
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void getAllPainting(AllPaintingRequest request, StreamObserver<AllPaintingResponse> responseObserver) {
         String title = request.getTitle();
@@ -56,6 +59,7 @@ public class GrpcPaintingService extends RococoPaintingServiceGrpc.RococoPaintin
         responseObserver.onCompleted();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void addPainting(AddPaintingRequest addPaintingRequest, StreamObserver<PaintingResponse> responseObserver) {
         PaintingEntity entity = paintingRepository.save(PaintingEntity.fromAddPaintingGrpcMessage(addPaintingRequest));
@@ -63,6 +67,7 @@ public class GrpcPaintingService extends RococoPaintingServiceGrpc.RococoPaintin
         responseObserver.onCompleted();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void updatePainting(UpdatePaintingRequest request, StreamObserver<PaintingResponse> responseObserver) {
         UUID paintingId = fromString(request.getId().toStringUtf8());
@@ -81,6 +86,7 @@ public class GrpcPaintingService extends RococoPaintingServiceGrpc.RococoPaintin
                 );
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void getAllPaintingByArtistId(AllPaintingByArtistIdRequest request, StreamObserver<AllPaintingResponse> responseObserver) {
         UUID artistId = UUID.fromString(request.getArtistId().toStringUtf8());

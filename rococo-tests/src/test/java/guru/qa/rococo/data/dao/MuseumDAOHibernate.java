@@ -4,6 +4,7 @@ import guru.qa.rococo.data.DataBase;
 import guru.qa.rococo.data.jpa.EntityManagerFactoryProvider;
 import guru.qa.rococo.data.jpa.JpaService;
 import guru.qa.rococo.data.model.MuseumEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -12,11 +13,13 @@ public class MuseumDAOHibernate extends JpaService {
         super(EntityManagerFactoryProvider.INSTANCE.getDataSource(DataBase.MUSEUM).createEntityManager());
     }
 
+    @Transactional(readOnly = true)
     public MuseumEntity createMuseum(MuseumEntity museum) {
         tx(em -> em.persist(museum));
         return museum;
     }
 
+    @Transactional(readOnly = true)
     public void deleteMuseumById(UUID museumId) {
         tx(em -> {
             MuseumEntity museum = em.find(MuseumEntity.class, museumId);

@@ -8,6 +8,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -27,6 +28,7 @@ public class GrpcArtistService extends RococoArtistServiceGrpc.RococoArtistServi
         this.artistRepository = artistRepository;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void getArtist(ArtistRequest request, StreamObserver<ArtistResponse> responseObserver) {
         UUID artistId = fromString(request.getId());
@@ -45,6 +47,7 @@ public class GrpcArtistService extends RococoArtistServiceGrpc.RococoArtistServi
                 );
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void getAllArtist(AllArtistRequest request, StreamObserver<AllArtistResponse> responseObserver) {
         String name = request.getName();
@@ -65,6 +68,7 @@ public class GrpcArtistService extends RococoArtistServiceGrpc.RococoArtistServi
         responseObserver.onCompleted();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void addArtist(AddArtistRequest addArtistRequest, StreamObserver<ArtistResponse> responseObserver) {
         ArtistEntity entity = artistRepository.save(ArtistEntity.fromAddArtistGrpcMessage(addArtistRequest));
@@ -72,6 +76,7 @@ public class GrpcArtistService extends RococoArtistServiceGrpc.RococoArtistServi
         responseObserver.onCompleted();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void updateArtist(UpdateArtistRequest request, StreamObserver<ArtistResponse> responseObserver) {
         UUID artistId = fromString(request.getId());
@@ -91,6 +96,7 @@ public class GrpcArtistService extends RococoArtistServiceGrpc.RococoArtistServi
     }
 
 
+    @Transactional(readOnly = true)
     @Override
     public void getArtistByIds(ArtistIdsRequest request, StreamObserver<AllArtistByIdsResponse> responseObserver) {
         Set<UUID> artistIds = request.getIdList().stream()

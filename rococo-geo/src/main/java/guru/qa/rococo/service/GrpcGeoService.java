@@ -8,6 +8,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -26,6 +27,7 @@ public class GrpcGeoService extends RococoGeoServiceGrpc.RococoGeoServiceImplBas
         this.countryRepository = countryRepository;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void getCountry(CountryId request, StreamObserver<CountryResponse> responseObserver) {
         UUID countryId = fromString(request.getId().toStringUtf8());
@@ -44,6 +46,7 @@ public class GrpcGeoService extends RococoGeoServiceGrpc.RococoGeoServiceImplBas
                 );
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void getCountryByName(CountryName request, StreamObserver<CountryResponse> responseObserver) {
         String countryName = request.getName();
@@ -62,6 +65,7 @@ public class GrpcGeoService extends RococoGeoServiceGrpc.RococoGeoServiceImplBas
                 );
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void getAllCountry(AllCountryRequest request, StreamObserver<AllCountryResponse> responseObserver) {
         int page = request.getPage();
@@ -80,6 +84,7 @@ public class GrpcGeoService extends RococoGeoServiceGrpc.RococoGeoServiceImplBas
         responseObserver.onCompleted();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void getCountriesByIds(CountryIdsRequest request, StreamObserver<AllCountryByIdsResponse> responseObserver) {
         Set<UUID> countryIds = request.getIdList().stream()

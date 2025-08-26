@@ -8,6 +8,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -27,6 +28,7 @@ public class GrpcMuseumService extends RococoMuseumServiceGrpc.RococoMuseumServi
         this.museumRepository = museumRepository;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void getMuseum(MuseumRequest request, StreamObserver<MuseumResponse> responseObserver) {
         UUID museumId = fromString(request.getId().toStringUtf8());
@@ -45,6 +47,7 @@ public class GrpcMuseumService extends RococoMuseumServiceGrpc.RococoMuseumServi
                 );
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void getAllMuseum(AllMuseumRequest request, StreamObserver<AllMuseumResponse> responseObserver) {
         String title = request.getTitle();
@@ -65,6 +68,7 @@ public class GrpcMuseumService extends RococoMuseumServiceGrpc.RococoMuseumServi
         responseObserver.onCompleted();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void addMuseum(AddMuseumRequest addMuseumRequest, StreamObserver<MuseumResponse> responseObserver) {
         MuseumEntity entity = museumRepository.save(MuseumEntity.fromAddMuseumGrpcMessage(addMuseumRequest));
@@ -72,6 +76,7 @@ public class GrpcMuseumService extends RococoMuseumServiceGrpc.RococoMuseumServi
         responseObserver.onCompleted();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void updateMuseum(UpdateMuseumRequest request, StreamObserver<MuseumResponse> responseObserver) {
         UUID museumId = fromString(request.getId().toStringUtf8());
@@ -90,6 +95,7 @@ public class GrpcMuseumService extends RococoMuseumServiceGrpc.RococoMuseumServi
                 );
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void getMuseumByIds(MuseumIdsRequest request, StreamObserver<AllMuseumByIdsResponse> responseObserver) {
         Set<UUID> museumIds = request.getIdList().stream()

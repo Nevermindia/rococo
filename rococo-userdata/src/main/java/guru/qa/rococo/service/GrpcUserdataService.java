@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.transaction.annotation.Transactional;
 
 import static io.grpc.Status.NOT_FOUND;
 
@@ -32,6 +33,7 @@ public class GrpcUserdataService extends RococoUserdataServiceGrpc.RococoUserdat
         this.userRepository = userRepository;
     }
 
+    @Transactional
     @KafkaListener(topics = "users", groupId = "userdata")
     public void listener(@Payload UserJson user, ConsumerRecord<String, UserJson> cr) {
         LOG.info("### Kafka topic [users] received message: " + user.username());
@@ -46,6 +48,7 @@ public class GrpcUserdataService extends RococoUserdataServiceGrpc.RococoUserdat
         ));
     }
 
+    @Transactional
     @Override
     public void getUser(UserRequest request, StreamObserver<UserResponse> responseObserver) {
         String username = request.getUsername();
@@ -60,6 +63,7 @@ public class GrpcUserdataService extends RococoUserdataServiceGrpc.RococoUserdat
         }
     }
 
+    @Transactional
     @Override
     public void updateUser(UpdateUserRequest request, StreamObserver<UserResponse> responseObserver) {
         String username = request.getUsername();

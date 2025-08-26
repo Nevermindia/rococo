@@ -13,12 +13,12 @@ public class ArtistDAOHibernate extends JpaService {
         super(EntityManagerFactoryProvider.INSTANCE.getDataSource(DataBase.ARTIST).createEntityManager());
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void createArtist(ArtistEntity artist) {
         persist(artist);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void deleteArtistById(UUID artistId) {
         tx(em -> {
             ArtistEntity artist = em.find(ArtistEntity.class, artistId);

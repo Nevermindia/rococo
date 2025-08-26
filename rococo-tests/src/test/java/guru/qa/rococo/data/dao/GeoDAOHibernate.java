@@ -16,7 +16,7 @@ public class GeoDAOHibernate extends JpaService {
     }
 
 
-    @Transactional(readOnly = true)
+    @Transactional
     public CountryEntity getCountryById(UUID countryId) {
         return em.createQuery("select country from CountryEntity country where country.id=:countryId", CountryEntity.class)
                 .setParameter("countryId", countryId)
@@ -24,14 +24,14 @@ public class GeoDAOHibernate extends JpaService {
     }
 
 
-    @Transactional(readOnly = true)
+    @Transactional
     public CountryEntity getCountryName(String countryName) {
         return em.createQuery("select country from CountryEntity country where country.name=:countryName", CountryEntity.class)
                 .setParameter("countryName", countryName)
                 .getSingleResult();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<CountryEntity> getAllCountry() {
         return em.createQuery("select c from CountryEntity c", CountryEntity.class)
                 .getResultList();

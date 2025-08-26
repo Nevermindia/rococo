@@ -25,7 +25,7 @@ public class GrpcPaintingService extends RococoPaintingServiceGrpc.RococoPaintin
         this.paintingRepository = paintingRepository;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void getPainting(PaintingRequest request, StreamObserver<PaintingResponse> responseObserver) {
         UUID paintingId = fromString(request.getId().toStringUtf8());
@@ -44,7 +44,7 @@ public class GrpcPaintingService extends RococoPaintingServiceGrpc.RococoPaintin
                 );
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void getAllPainting(AllPaintingRequest request, StreamObserver<AllPaintingResponse> responseObserver) {
         String title = request.getTitle();
@@ -59,7 +59,7 @@ public class GrpcPaintingService extends RococoPaintingServiceGrpc.RococoPaintin
         responseObserver.onCompleted();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void addPainting(AddPaintingRequest addPaintingRequest, StreamObserver<PaintingResponse> responseObserver) {
         PaintingEntity entity = paintingRepository.save(PaintingEntity.fromAddPaintingGrpcMessage(addPaintingRequest));
@@ -67,7 +67,7 @@ public class GrpcPaintingService extends RococoPaintingServiceGrpc.RococoPaintin
         responseObserver.onCompleted();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void updatePainting(UpdatePaintingRequest request, StreamObserver<PaintingResponse> responseObserver) {
         UUID paintingId = fromString(request.getId().toStringUtf8());
@@ -86,7 +86,7 @@ public class GrpcPaintingService extends RococoPaintingServiceGrpc.RococoPaintin
                 );
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void getAllPaintingByArtistId(AllPaintingByArtistIdRequest request, StreamObserver<AllPaintingResponse> responseObserver) {
         UUID artistId = UUID.fromString(request.getArtistId().toStringUtf8());

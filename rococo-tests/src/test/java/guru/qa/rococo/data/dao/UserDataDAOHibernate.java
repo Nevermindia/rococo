@@ -11,12 +11,12 @@ public class UserDataDAOHibernate extends JpaService {
         super(EntityManagerFactoryProvider.INSTANCE.getDataSource(DataBase.USERDATA).createEntityManager());
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void createUserInUserData(UserDataEntity user) {
         this.persist(user);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void deleteUserInUserData(UserDataEntity user) {
         this.remove(user);
     }

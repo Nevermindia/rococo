@@ -13,13 +13,13 @@ public class MuseumDAOHibernate extends JpaService {
         super(EntityManagerFactoryProvider.INSTANCE.getDataSource(DataBase.MUSEUM).createEntityManager());
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public MuseumEntity createMuseum(MuseumEntity museum) {
         tx(em -> em.persist(museum));
         return museum;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void deleteMuseumById(UUID museumId) {
         tx(em -> {
             MuseumEntity museum = em.find(MuseumEntity.class, museumId);

@@ -13,12 +13,12 @@ public class PaintingDAOHibernate extends JpaService {
         super(EntityManagerFactoryProvider.INSTANCE.getDataSource(DataBase.PAINTING).createEntityManager());
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void createPainting(PaintingEntity painting) {
         persist(painting);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void deletePaintingById(UUID paintingId) {
         tx(em -> {
             PaintingEntity painting = em.find(PaintingEntity.class, paintingId);

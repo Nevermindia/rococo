@@ -28,7 +28,7 @@ public class GrpcMuseumService extends RococoMuseumServiceGrpc.RococoMuseumServi
         this.museumRepository = museumRepository;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void getMuseum(MuseumRequest request, StreamObserver<MuseumResponse> responseObserver) {
         UUID museumId = fromString(request.getId().toStringUtf8());
@@ -47,7 +47,7 @@ public class GrpcMuseumService extends RococoMuseumServiceGrpc.RococoMuseumServi
                 );
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void getAllMuseum(AllMuseumRequest request, StreamObserver<AllMuseumResponse> responseObserver) {
         String title = request.getTitle();
@@ -68,7 +68,7 @@ public class GrpcMuseumService extends RococoMuseumServiceGrpc.RococoMuseumServi
         responseObserver.onCompleted();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void addMuseum(AddMuseumRequest addMuseumRequest, StreamObserver<MuseumResponse> responseObserver) {
         MuseumEntity entity = museumRepository.save(MuseumEntity.fromAddMuseumGrpcMessage(addMuseumRequest));
@@ -76,7 +76,7 @@ public class GrpcMuseumService extends RococoMuseumServiceGrpc.RococoMuseumServi
         responseObserver.onCompleted();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void updateMuseum(UpdateMuseumRequest request, StreamObserver<MuseumResponse> responseObserver) {
         UUID museumId = fromString(request.getId().toStringUtf8());
@@ -95,7 +95,7 @@ public class GrpcMuseumService extends RococoMuseumServiceGrpc.RococoMuseumServi
                 );
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void getMuseumByIds(MuseumIdsRequest request, StreamObserver<AllMuseumByIdsResponse> responseObserver) {
         Set<UUID> museumIds = request.getIdList().stream()

@@ -17,13 +17,13 @@ public class AuthUserDAOHibernate extends JpaService {
     }
 
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void createUser(AuthUserEntity user) {
         user.setPassword(pe.encode(user.getPassword()));
         persist(user);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public AuthUserEntity getUserFromAuthUserById(UUID userId) {
         return em.createQuery("select u from AuthUserEntity u where u.id=:userId", AuthUserEntity.class)
                 .setParameter("userId", userId)
@@ -31,12 +31,12 @@ public class AuthUserDAOHibernate extends JpaService {
     }
 
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void updateUser(AuthUserEntity user) {
         merge(user);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void deleteUser(AuthUserEntity user) {
         remove(user);
     }

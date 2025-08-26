@@ -28,7 +28,7 @@ public class GrpcArtistService extends RococoArtistServiceGrpc.RococoArtistServi
         this.artistRepository = artistRepository;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void getArtist(ArtistRequest request, StreamObserver<ArtistResponse> responseObserver) {
         UUID artistId = fromString(request.getId());
@@ -47,7 +47,7 @@ public class GrpcArtistService extends RococoArtistServiceGrpc.RococoArtistServi
                 );
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void getAllArtist(AllArtistRequest request, StreamObserver<AllArtistResponse> responseObserver) {
         String name = request.getName();
@@ -68,7 +68,7 @@ public class GrpcArtistService extends RococoArtistServiceGrpc.RococoArtistServi
         responseObserver.onCompleted();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void addArtist(AddArtistRequest addArtistRequest, StreamObserver<ArtistResponse> responseObserver) {
         ArtistEntity entity = artistRepository.save(ArtistEntity.fromAddArtistGrpcMessage(addArtistRequest));
@@ -76,7 +76,7 @@ public class GrpcArtistService extends RococoArtistServiceGrpc.RococoArtistServi
         responseObserver.onCompleted();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void updateArtist(UpdateArtistRequest request, StreamObserver<ArtistResponse> responseObserver) {
         UUID artistId = fromString(request.getId());
@@ -96,7 +96,7 @@ public class GrpcArtistService extends RococoArtistServiceGrpc.RococoArtistServi
     }
 
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void getArtistByIds(ArtistIdsRequest request, StreamObserver<AllArtistByIdsResponse> responseObserver) {
         Set<UUID> artistIds = request.getIdList().stream()

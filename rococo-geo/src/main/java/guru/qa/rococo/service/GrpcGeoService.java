@@ -27,7 +27,7 @@ public class GrpcGeoService extends RococoGeoServiceGrpc.RococoGeoServiceImplBas
         this.countryRepository = countryRepository;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void getCountry(CountryId request, StreamObserver<CountryResponse> responseObserver) {
         UUID countryId = fromString(request.getId().toStringUtf8());
@@ -46,7 +46,7 @@ public class GrpcGeoService extends RococoGeoServiceGrpc.RococoGeoServiceImplBas
                 );
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void getCountryByName(CountryName request, StreamObserver<CountryResponse> responseObserver) {
         String countryName = request.getName();
@@ -65,7 +65,7 @@ public class GrpcGeoService extends RococoGeoServiceGrpc.RococoGeoServiceImplBas
                 );
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void getAllCountry(AllCountryRequest request, StreamObserver<AllCountryResponse> responseObserver) {
         int page = request.getPage();
@@ -84,7 +84,7 @@ public class GrpcGeoService extends RococoGeoServiceGrpc.RococoGeoServiceImplBas
         responseObserver.onCompleted();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void getCountriesByIds(CountryIdsRequest request, StreamObserver<AllCountryByIdsResponse> responseObserver) {
         Set<UUID> countryIds = request.getIdList().stream()

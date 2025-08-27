@@ -40,7 +40,7 @@ public class HeaderPage  {
 
     @Step("Открыть отображение кнопки 'Войти' - пользователь неавторизован")
     public LoginPage checkLoginBtnIsVisible() {
-        loginBtn.click();
+        loginBtn.shouldBe(visible);
         return new LoginPage();
     }
 
@@ -55,14 +55,4 @@ public class HeaderPage  {
         profileBtn.click();
         return new ProfilePage();
     }
-//
-//    public ArtistsPage openArtistsPage() {
-//        artistsTitle.click();
-//        return null;
-//    }
-//
-//    public MuseumsPage openMuseumsPage() {
-//        museumsTitle.click();
-//        return null;
-//    }
 }

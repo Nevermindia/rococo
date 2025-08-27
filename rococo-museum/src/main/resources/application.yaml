@@ -1,8 +1,8 @@
 grpc:
   server:
     port: 8093
-    max-inbound-message-size: 4194304 # 4MB
-    max-outbound-message-size: 4194304 # 4MB
+    max-inbound-message-size: 15728640
+    max-outbound-message-size: 15728640
 
 spring:
   application:
@@ -25,6 +25,7 @@ spring:
     locations: classpath:db/migration/rococo-museum
   jpa:
     properties:
+      javax.persistence.validation.mode: CALLBACK
       hibernate:
         jdbc:
           lob:

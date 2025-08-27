@@ -8,8 +8,12 @@ import guru.qa.rococo.page.MainPage;
 import guru.qa.rococo.utils.RandomDataUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
+
 
 @WebTest
+@Execution(ExecutionMode.SAME_THREAD)
 public class LoginTest {
     public static final String INCORRECT_CREDENTIALS_ERROR = "Неверные учетные данные пользователя";
     public static final String SESSION_IS_OVER = "Сессия завершена";

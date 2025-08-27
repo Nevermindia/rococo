@@ -8,6 +8,8 @@ import guru.qa.rococo.model.PaintingJson;
 import guru.qa.rococo.page.painting.PaintingsPage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -16,6 +18,7 @@ import static guru.qa.rococo.utils.DefaultData.PAINTING_IMAGE_PATH;
 import static guru.qa.rococo.utils.DefaultData.PAINTING_IMAGE_PATH_NEW;
 import static guru.qa.rococo.utils.RandomDataUtils.*;
 
+@Execution(ExecutionMode.SAME_THREAD)
 @WebTest
 public class PaintingTest {
     private static final String PAINTING_ADDED_MSG = "Добавлена картина: %s";
@@ -41,7 +44,7 @@ public class PaintingTest {
                 .uploadPainting(PAINTING_IMAGE_PATH)
                 .selectAuthor(artist.getName())
                 .setDescription(paintingDescription)
-                .selectMuseum(museum.getTitle())
+                .selectFirstMuseum()
                 .submitForm(new PaintingsPage())
                 .checkToastMessage(PAINTING_ADDED_MSG.formatted(paintingName))
                 .refreshPage()
@@ -64,6 +67,7 @@ public class PaintingTest {
                 .editPainting()
                 .setName(newName)
                 .setDescription(newDescription)
+                .selectFirstArtist()
                 .submitForm()
                 .checkToastMessage(PAINTING_EDITED_MSG.formatted(newName))
                 .refreshPage()
@@ -91,9 +95,9 @@ public class PaintingTest {
                 .addPainting()
                 .setName(name)
                 .uploadPainting(PAINTING_IMAGE_PATH)
-                .selectAuthor(artist.getName())
+                .selectFirstAuthor()
                 .setDescription(randomPaintingDescription())
-                .selectMuseum(museum.getTitle())
+                .selectFirstMuseum()
                 .submitForm(new PaintingsPage())
                 .checkTextFieldErrorMessage(TITLE_LENGTH_CONSTRAINT_MIN);
     }
@@ -129,9 +133,9 @@ public class PaintingTest {
                 .addPainting()
                 .setName(randomPaintingName())
                 .uploadPainting(PAINTING_IMAGE_PATH)
-                .selectAuthor(artist.getName())
+                .selectFirstAuthor()
                 .setDescription(description)
-                .selectMuseum(museum.getTitle())
+                .selectFirstMuseum()
                 .submitForm(new PaintingsPage())
                 .checkTextFieldErrorMessage(DESCRIPTION_LENGTH_CONSTRAINT_MIN);
     }
@@ -148,9 +152,9 @@ public class PaintingTest {
                 .addPainting()
                 .setName(randomPaintingName())
                 .uploadPainting(PAINTING_IMAGE_PATH)
-                .selectAuthor(artist.getName())
+                .selectFirstAuthor()
                 .setDescription(description)
-                .selectMuseum(museum.getTitle())
+                .selectFirstMuseum()
                 .submitForm(new PaintingsPage())
                 .checkTextFieldErrorMessage(DESCRIPTION_LENGTH_CONSTRAINT_MAX);
     }
@@ -196,6 +200,7 @@ public class PaintingTest {
                 .searchPainting(painting.getTitle())
                 .openPainting(painting.getTitle())
                 .editPainting()
+                .selectFirstArtist()
                 .uploadImage(PAINTING_IMAGE_PATH_NEW)
                 .submitForm()
                 .checkToastMessage(String.format(PAINTING_EDITED_MSG, painting.getTitle()))

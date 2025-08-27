@@ -1,8 +1,13 @@
 grpc:
   server:
     port: 8095
-    max-inbound-message-size: 4194304 # 4MB
-    max-outbound-message-size: 4194304 # 4MB
+    max-inbound-message-size: 50MB
+    max-outbound-message-size: 50MB
+    flow-control-window: 10485760
+    permit-keep-alive-without-calls: true
+    handshake-timeout: 30000
+    keep-alive-time: 30s
+    keep-alive-timeout: 10s
 
 spring:
   application:
@@ -25,6 +30,7 @@ spring:
     locations: classpath:db/migration/rococo-painting
   jpa:
     properties:
+      javax.persistence.validation.mode: CALLBACK
       hibernate:
         jdbc:
           lob:
@@ -38,6 +44,11 @@ logging:
     root: INFO
     org.springframework.kafka: DEBUG
     org.springframework.web: INFO
+    io.grpc: DEBUG
+    io.grpc.netty: DEBUG
+    io.netty: DEBUG
+    guru.qa.rococo: DEBUG
+    org.springframework: DEBUG
 
 ---
 spring:

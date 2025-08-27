@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import guru.qa.grpc.rococo.grpc.UserResponse;
+import guru.qa.rococo.data.model.AuthUserEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,9 +30,14 @@ public record UserJson(
         TestData testData
 ) {
 
-    public @Nonnull UserJson addTestData(@Nonnull TestData testData) {
+    public static UserJson fromEntity(AuthUserEntity entity) {
         return new UserJson(
-                id, username, firstname, lastname, avatar, testData
+                entity.getId(),
+                entity.getUsername(),
+                null,
+                null,
+                null,
+                new TestData(entity.getEncodedPassword())
         );
     }
 

@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 import static jakarta.persistence.FetchType.EAGER;
 
@@ -44,6 +41,26 @@ public class AuthUserEntity {
     private List<AuthorityEntity> authorities = new ArrayList<>();
 
     private transient String encodedPassword;
+
+    public static AuthUserEntity fillAuthUserEntity(String desiredUsername, String desiredPassword) {
+        AuthUserEntity user = new AuthUserEntity();
+
+        user.setUsername(desiredUsername);
+        user.setPassword(desiredPassword);
+        user.setEncodedPassword(desiredPassword);
+        user.setEnabled(true);
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
+        user.setAuthorities(new ArrayList<>(Arrays.stream(Authority.values())
+                .map(a -> {
+                    AuthorityEntity ae = new AuthorityEntity();
+                    ae.setAuthority(a);
+                    ae.setUser(user);
+                    return ae;
+                }).toList()));
+        return user;
+    }
 
     @Override
     public final boolean equals(Object o) {

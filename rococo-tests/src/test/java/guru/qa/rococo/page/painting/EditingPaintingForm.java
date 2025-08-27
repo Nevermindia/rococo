@@ -61,6 +61,13 @@ public class EditingPaintingForm extends BasePage<EditingPaintingForm> {
         return this;
     }
 
+    @Step("Выбрать первого художника")
+    @Nonnull
+    public EditingPaintingForm selectFirstArtist() {
+        authorSelect.selectFirstItem();
+        return this;
+    }
+
     @Step("Нажать кнопку 'Сохранить'")
     @Nonnull
     public PaintingPage submitForm() {

@@ -42,4 +42,8 @@ public class Select {
 
         self.selectOption(item);
     }
+
+    public void selectFirstItem() {
+        self.selectOption(0);
+    }
 }

@@ -7,4 +7,5 @@ create table if not exists museum
     geo_id                 binary(16)    not null,
     photo                  longblob      not null,
     primary key (id)
+    constraint fk_country_id foreign key (geo_id) references `country` (id)
 );

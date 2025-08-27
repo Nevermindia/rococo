@@ -1,6 +1,8 @@
 package guru.qa.rococo.page;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -9,6 +11,7 @@ import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
+@Execution(ExecutionMode.SAME_THREAD)
 @ParametersAreNonnullByDefault
 public class LoginPage extends BasePage<LoginPage> {
     public static final String URL = CFG.authUrl() + "login";

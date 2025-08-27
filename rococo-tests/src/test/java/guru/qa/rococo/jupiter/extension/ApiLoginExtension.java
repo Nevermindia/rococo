@@ -43,7 +43,6 @@ public class ApiLoginExtension implements BeforeEachCallback, ParameterResolver 
                     final UserJson userByExtension = UserExtension.createdUser();
                     final String username;
                     final String password;
-                    final String token;
 
                     if (("".equals(apiLogin.username()) || "".equals(apiLogin.password()))) {
                         if (apiLogin.user() == null) {
@@ -61,7 +60,7 @@ public class ApiLoginExtension implements BeforeEachCallback, ParameterResolver 
                         password = apiLogin.password();
                     }
 
-                    token = authApiClient.login(
+                    String token = authApiClient.login(
                             username,
                             password
                     );

@@ -45,6 +45,13 @@ public class AddNewPaintingPage extends BasePage<AddNewPaintingPage> {
         return this;
     }
 
+    @Step("Выбрать первого автора")
+    @Nonnull
+    public AddNewPaintingPage selectFirstAuthor() {
+        authorSelect.selectFirstItem();
+        return this;
+    }
+
     @Step("Ввести описание картины: '{0}'")
     @Nonnull
     public AddNewPaintingPage setDescription(String text) {
@@ -57,6 +64,13 @@ public class AddNewPaintingPage extends BasePage<AddNewPaintingPage> {
     @Nonnull
     public AddNewPaintingPage selectMuseum(String museumName) {
         museumSelect.selectItem(museumName);
+        return this;
+    }
+
+    @Step("Выбрать первый музей")
+    @Nonnull
+    public AddNewPaintingPage selectFirstMuseum() {
+        museumSelect.selectFirstItem();
         return this;
     }
 

@@ -21,7 +21,7 @@ import static guru.qa.rococo.utils.RandomDataUtils.randomPaintingDescription;
 import static guru.qa.rococo.utils.RandomDataUtils.randomPaintingName;
 
 @ParametersAreNonnullByDefault
-public class PaintingExtension implements BeforeEachCallback, ParameterResolver, AfterEachCallback {
+public class PaintingExtension implements BeforeEachCallback, ParameterResolver {
 
     public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(PaintingExtension.class);
     private final PaintingRepositoryHibernate paintingRepository = new PaintingRepositoryHibernate();
@@ -60,13 +60,6 @@ public class PaintingExtension implements BeforeEachCallback, ParameterResolver,
 
                     context.getStore(NAMESPACE).put(context.getUniqueId(), PaintingJson.fromEntity(painting));
                 });
-    }
-
-    @Override
-    @Step("<БД> Удалить картину")
-    public void afterEach(ExtensionContext context) throws Exception {
-        AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), Painting.class)
-                .ifPresent(paintingAnno -> paintingRepository.deletePaintingById(getPainting().getId()));
     }
 
     @Nullable

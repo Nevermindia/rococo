@@ -19,7 +19,7 @@ import static guru.qa.rococo.utils.RandomDataUtils.randomArtistBio;
 import static guru.qa.rococo.utils.RandomDataUtils.randomArtistName;
 
 @ParametersAreNonnullByDefault
-public class ArtistExtension implements BeforeEachCallback, AfterEachCallback, ParameterResolver {
+public class ArtistExtension implements BeforeEachCallback, ParameterResolver {
 
     public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(ArtistExtension.class);
     private final ArtistRepositoryHibernate artistRepository = new ArtistRepositoryHibernate();
@@ -42,18 +42,6 @@ public class ArtistExtension implements BeforeEachCallback, AfterEachCallback, P
                     artistRepository.createArtist(artist);
                     setArtist(ArtistJson.fromEntity(artist));
                 });
-    }
-
-    @Override
-    @Step("<БД> Удалить художника")
-    public void afterEach(ExtensionContext context) throws Exception {
-        Optional<Artist> artistAnno =
-                AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), Artist.class);
-        artistAnno.ifPresent(artist -> {
-            if (artist.removeAfterTest()) {
-                artistRepository.deleteArtistById(getArtist().getId());
-            }
-        });
     }
 
     @Override

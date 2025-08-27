@@ -31,18 +31,32 @@ grpc:
     grpcUserdataClient:
       address: 'static://localhost:8091'
       negotiationType: PLAINTEXT
+      enableKeepAlive: true
+      max-inbound-message-size: 50MB
+      max-outbound-message-size: 50MB
     grpcArtistClient:
       address: 'static://localhost:8092'
       negotiationType: PLAINTEXT
+      enableKeepAlive: true
+      max-inbound-message-size: 50MB
+      max-outbound-message-size: 50MB
     grpcMuseumClient:
       address: 'static://localhost:8093'
       negotiationType: PLAINTEXT
+      enableKeepAlive: true
+      max-inbound-message-size: 50MB
+      max-outbound-message-size: 50MB
     grpcGeoClient:
       address: 'static://localhost:8094'
       negotiationType: PLAINTEXT
+      enableKeepAlive: true
+      max-inbound-message-size: 50MB
+      max-outbound-message-size: 50MB
     grpcPaintingClient:
       address: 'static://localhost:8095'
       negotiationType: PLAINTEXT
+      max-inbound-message-size: 50MB
+      max-outbound-message-size: 50MB
 
 rococo-front:
   base-uri: 'http://127.0.0.1:3000'
@@ -62,18 +76,32 @@ grpc:
     grpcUserdataClient:
       address: 'static://userdata.rococo.dc:8091'
       negotiationType: PLAINTEXT
+      enableKeepAlive: true
+      max-inbound-message-size: 50MB
+      max-outbound-message-size: 50MB
     grpcArtistClient:
       address: 'static://artist.rococo.dc:8092'
       negotiationType: PLAINTEXT
+      enableKeepAlive: true
+      max-inbound-message-size: 50MB
+      max-outbound-message-size: 50MB
     grpcMuseumClient:
       address: 'static://museum.rococo.dc:8093'
       negotiationType: PLAINTEXT
+      enableKeepAlive: true
+      max-inbound-message-size: 50MB
+      max-outbound-message-size: 50MB
     grpcGeoClient:
       address: 'static://geo.rococo.dc:8094'
       negotiationType: PLAINTEXT
+      max-inbound-message-size: 50MB
+      max-outbound-message-size: 50MB
     grpcPaintingClient:
       address: 'static://painting.rococo.dc:8095'
       negotiationType: PLAINTEXT
+      enableKeepAlive: true
+      max-inbound-message-size: 50MB
+      max-outbound-message-size: 50MB
 
 rococo-front:
   base-uri: 'http://client.rococo.dc'

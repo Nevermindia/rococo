@@ -22,7 +22,7 @@ import static guru.qa.rococo.utils.RandomDataUtils.randomMuseumTitle;
 
 
 @ParametersAreNonnullByDefault
-public class MuseumExtension implements BeforeEachCallback, AfterEachCallback, ParameterResolver {
+public class MuseumExtension implements BeforeEachCallback, ParameterResolver {
 
     public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(MuseumExtension.class);
     private final MuseumRepositoryHibernate museumRepository = new MuseumRepositoryHibernate();
@@ -56,18 +56,6 @@ public class MuseumExtension implements BeforeEachCallback, AfterEachCallback, P
                     museum.setId(museumForTest.getId());
                     setMuseum(MuseumJson.fromEntity(museum));
                 });
-    }
-
-    @Override
-    @Step("<БД> Удалить музей")
-    public void afterEach(ExtensionContext context) throws Exception {
-        AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), Museum.class).ifPresent(
-                museum -> {
-                    if (museum.removeAfterTest()) {
-                        museumRepository.deleteMuseumById(getMuseum().getId());
-                    }
-                }
-        );
     }
 
     @Override

@@ -161,7 +161,7 @@ $ cd rococo
 ```posh
 User-MacBook-Pro  rococo % bash docker-compose-dev.sh
 ```
-Начать работу с запущенным приложением можно открыв в браузере Rococo frontend по адресу http://rococo.client.dc
+Начать работу с запущенным приложением можно открыв в браузере Rococo frontend по адресу http://client.rococo.dc
 
 ## Запуск e-2-e тестов в Docker:
 
@@ -180,6 +180,6 @@ User-MacBook-Pro  rococo % bash docker-compose-e2e.sh
 
 #### 4. Allure доступен по адресу:
 Allure-ui доступен по адресу: http://localhost:5252/
-Allure report доступен по адресу: http://localhost:5050/allure-docker-service/projects/niffler-ng/reports/latest/index.html
+Allure report доступен по адресу: http://localhost:5050/allure-docker-service/projects/rococo/reports/latest/index.html
 
 

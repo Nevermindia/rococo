@@ -26,7 +26,7 @@ spring:
     locations: classpath:db/migration/rococo-auth
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
     properties:
       hibernate:
         jdbc:
@@ -72,10 +72,15 @@ spring:
   config:
     activate:
       on-profile: 'docker'
+  autoconfigure:
+    exclude:
+      - 'org.springframework.cloud.vault.config.VaultAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
   kafka:
     bootstrap-servers: 'kafka:9092'
   datasource:
-    url: 'jdbc:mysql://rococo-db:3306/rococo-auth?serverTimezone=UTC&createDatabaseIfNotExist=true'
+    url: 'jdbc:mysql://rococo-all-db:3306/rococo-auth?serverTimezone=UTC&createDatabaseIfNotExist=true'
     username: root
     password: secret
 rococo-front:

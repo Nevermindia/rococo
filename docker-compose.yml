@@ -7,7 +7,7 @@ services:
     volumes:
       - ./mysql.cnf:/etc/mysql/conf.d/custom.cnf
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-psecret"]
       interval: 5s
       timeout: 5s
       retries: 5

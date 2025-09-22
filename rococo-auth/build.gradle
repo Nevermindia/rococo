@@ -27,7 +27,7 @@ dependencies {
 jib {
     container {
         ports = ['9000']
-        jvmFlags = ["-Dspring.profiles.active=${System.env.PROFILE}"]
+        jvmFlags = ["-Dspring.profiles.active=${System.getenv("PROFILE")}"]
         creationTime = 'USE_CURRENT_TIMESTAMP'
         labels = [
                 'version'   : "${project.version}".toString()
@@ -43,7 +43,7 @@ jib {
         }
     }
     to {
-        image = "${project.ext.dockerHubName}/${project.name}-${System.env.PROFILE}"
+        image = "${project.ext.dockerHubName}/${project.name}-${System.getenv("PROFILE")}"
         tags = ['latest', "${project.version}"]
     }
 }

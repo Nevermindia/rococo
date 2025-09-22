@@ -1,7 +1,8 @@
 #!/bin/bash
 source ./docker.properties
 export PROFILE=docker
-export PREFIX="nevermindia"
+export PREFIX="${IMAGE_PREFIX}"
+export ARCH=$(uname -m)
 
 docker compose down
 

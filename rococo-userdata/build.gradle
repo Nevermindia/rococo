@@ -11,6 +11,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation project(':rococo-grpc-common')
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-mysql'
     implementation "net.devh:grpc-server-spring-boot-starter:${project.ext.springGrpcVersion}"
     runtimeOnly "mysql:mysql-connector-java:${project.ext.mysqlDriverVersion}"
     implementation "org.springframework.kafka:spring-kafka:${project.ext.springKafkaVersion}"

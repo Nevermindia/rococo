@@ -65,6 +65,13 @@ spring:
   config:
     activate:
       on-profile: 'docker'
+  autoconfigure:
+    exclude:
+      - 'org.springframework.cloud.vault.config.VaultAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
+      - 'org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration'
+      - 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration'
   security:
     oauth2:
       resourceserver:

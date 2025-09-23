@@ -1,11 +1,15 @@
 services:
   rococo-all-db:
     container_name: rococo-all-db
-    image: mysql:8.3.0
+    image: mysql:8.0
     environment:
       - MYSQL_ROOT_PASSWORD=secret
+      - TZ=GMT+3
     volumes:
       - ./mysql.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./mysql/init:/docker-entrypoint-initdb.d
+      - mysql-data:/var/lib/mysql
+      - ./mysql/tmp:/var/run/mysqld
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-psecret"]
       interval: 5s
@@ -69,7 +73,7 @@ services:
     ports:
       - 8090:8090
     healthcheck:
-      test: "wget --spider http://localhost:8080/actuator/health || exit 1"
+      test: "wget --spider http://localhost:8090/actuator/health || exit 1"
       interval: 5s
       timeout: 5s
       retries: 5
@@ -80,13 +84,22 @@ services:
     networks:
       - rococo-network
 
-  museum.rococo.dc:
-    container_name: museum.rococo.dc
-    image: ${PREFIX}/rococo-museum-docker:latest
+  # Сервисы, которые могут запускаться параллельно после auth
+  geo.rococo.dc:
+    container_name: geo.rococo.dc
+    image: ${PREFIX}/rococo-geo-docker:latest
     ports:
-      - 8093:8093
+      - 8094:8094
+      - 18094:18094
+    healthcheck:
+      test: "wget --spider http://localhost:8094/actuator/health || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 5
     restart: always
     depends_on:
+      auth.rococo.dc:
+        condition: service_healthy
       rococo-all-db:
         condition: service_healthy
     networks:
@@ -97,20 +110,16 @@ services:
     image: ${PREFIX}/rococo-artist-docker:latest
     ports:
       - 8092:8092
+      - 18092:18092
+    healthcheck:
+      test: "wget --spider http://localhost:8092/actuator/health || exit 1"
+      interval: 15s
+      timeout: 5s
+      retries: 5
     restart: always
     depends_on:
-      rococo-all-db:
+      auth.rococo.dc:
         condition: service_healthy
-    networks:
-      - rococo-network
-
-  painting.rococo.dc:
-    container_name: painting.rococo.dc
-    image: ${PREFIX}/rococo-painting-docker:latest
-    ports:
-      - 8095:8095
-    restart: always
-    depends_on:
       rococo-all-db:
         condition: service_healthy
     networks:
@@ -121,21 +130,66 @@ services:
     image: ${PREFIX}/rococo-userdata-docker:latest
     ports:
       - 8091:8091
+      - 18091:18091
+    healthcheck:
+      test: "wget --spider http://localhost:18091/actuator/health || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 5
     restart: always
     depends_on:
       auth.rococo.dc:
         condition: service_healthy
+      rococo-all-db:
+        condition: service_healthy
     networks:
       - rococo-network
 
-  geo.rococo.dc:
-    container_name: geo.rococo.dc
-    image: ${PREFIX}/rococo-geo-docker:latest
+  # Museum зависит от geo (т.к. есть FK на country)
+  museum.rococo.dc:
+    container_name: museum.rococo.dc
+    environment:
+      - LOGGING_LEVEL_GRPC=DEBUG
+      - LOGGING_LEVEL_ROOT=DEBUG
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK=DEBUG
+      - LOGGING_LEVEL_GURU_QA=DEBUG
+    image: ${PREFIX}/rococo-museum-docker:latest
     ports:
-      - 8094:8094
+      - 8093:8093
+      - 18093:18093
+    healthcheck:
+      test: "wget --spider http://localhost:18093/actuator/health || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 5
     restart: always
     depends_on:
-      auth.rococo.dc:
+      geo.rococo.dc:
+        condition: service_healthy
+      rococo-all-db:
+        condition: service_healthy
+    networks:
+      - rococo-network
+
+  # Painting зависит от museum и artist (т.к. есть FK на museum_id и artist_id)
+  painting.rococo.dc:
+    container_name: painting.rococo.dc
+    image: ${PREFIX}/rococo-painting-docker:latest
+    ports:
+      - 8095:8095
+      - 18095:18095
+    healthcheck:
+      test: "wget --spider http://localhost:18095/actuator/health || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: always
+    depends_on:
+      museum.rococo.dc:
+        condition: service_healthy
+      artist.rococo.dc:
+        condition: service_healthy
+      rococo-all-db:
         condition: service_healthy
     networks:
       - rococo-network
@@ -150,10 +204,11 @@ services:
       - 80:80
     depends_on:
       gateway.rococo.dc:
-        condition: service_started
+        condition: service_healthy
     networks:
       - rococo-network
 
+  # Остальные сервисы (selenoid, allure и т.д.) остаются без изменений
   selenoid:
     profiles:
       - test
@@ -205,7 +260,7 @@ services:
       - ./rococo-tests/.screen-output/screenshots/selenoid:/rococo/rococo-tests/.screen-output/screenshots/selenoid
     depends_on:
       client.rococo.dc:
-        condition: service_started
+        condition: service_healthy
     networks:
       - rococo-network
 
@@ -243,3 +298,4 @@ networks:
 volumes:
   allure-results:
     external: true
+  mysql-data:

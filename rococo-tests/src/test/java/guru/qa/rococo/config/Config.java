@@ -10,11 +10,6 @@ public interface Config {
     }
 
     @Nonnull
-    default String projectId() {
-        return "nevermindia-rococo";
-    }
-
-    @Nonnull
     String frontUrl();
 
     @Nonnull

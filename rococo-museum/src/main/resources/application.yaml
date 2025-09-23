@@ -4,6 +4,18 @@ grpc:
     max-inbound-message-size: 15728640
     max-outbound-message-size: 15728640
 
+management:
+  server:
+    port: 18093
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
 spring:
   application:
     name: rococo-museum
@@ -22,8 +34,9 @@ spring:
     enabled: true
     baseline-on-migrate: true
     baseline-version: 0
-    schemas: rococo-museum
+    schemas: rococo
     locations: classpath:db/migration/rococo-museum
+    table: flyway_history_museum
   jpa:
     hibernate:
       ddl-auto: none
@@ -50,7 +63,7 @@ spring:
       - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
       - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
   datasource:
-    url: 'jdbc:mysql://localhost:3306/rococo-museum?serverTimezone=UTC&createDatabaseIfNotExist=true'
+    url: 'jdbc:mysql://localhost:3306/rococo?serverTimezone=UTC&createDatabaseIfNotExist=true'
 ---
 spring:
   config:
@@ -62,5 +75,5 @@ spring:
       - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
       - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
   datasource:
-    url: 'jdbc:mysql://rococo-all-db:3306/rococo-museum?serverTimezone=UTC&createDatabaseIfNotExist=true'
+    url: 'jdbc:mysql://rococo-all-db:3306/rococo?serverTimezone=UTC&createDatabaseIfNotExist=true'
 ---

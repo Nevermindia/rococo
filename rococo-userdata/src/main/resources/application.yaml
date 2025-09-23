@@ -2,6 +2,18 @@ grpc:
   server:
     port: 8091
 
+management:
+  server:
+    port: 18091
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
 spring:
   application:
     name: rococo-userdata
@@ -20,8 +32,9 @@ spring:
     repair-on-migrate: true
     baseline-on-migrate: true
     baseline-version: 0
-    schemas: rococo-userdata
+    schemas: rococo
     locations: classpath:db/migration/rococo-userdata
+    table: flyway_history_userdata
   jpa:
     hibernate:
       ddl-auto: none
@@ -57,7 +70,7 @@ spring:
       group-id: 'userdata'
       auto-offset-reset: earliest
   datasource:
-    url: 'jdbc:mysql://localhost:3306/rococo-userdata?serverTimezone=UTC&createDatabaseIfNotExist=true'
+    url: 'jdbc:mysql://localhost:3306/rococo?serverTimezone=UTC&createDatabaseIfNotExist=true'
 ---
 spring:
   config:
@@ -74,5 +87,5 @@ spring:
       group-id: 'userdata'
       auto-offset-reset: earliest
   datasource:
-    url: 'jdbc:mysql://rococo-all-db:3306/rococo-userdata?serverTimezone=UTC&createDatabaseIfNotExist=true'
+    url: 'jdbc:mysql://rococo-all-db:3306/rococo?serverTimezone=UTC&createDatabaseIfNotExist=true'
 ---

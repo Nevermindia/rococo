@@ -9,6 +9,18 @@ grpc:
     keep-alive-time: 30s
     keep-alive-timeout: 10s
 
+management:
+  server:
+    port: 18092
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
 spring:
   main:
     web-application-type: none
@@ -28,8 +40,9 @@ spring:
     enabled: true
     baseline-on-migrate: true
     baseline-version: 0
-    schemas: rococo-artist
+    schemas: rococo
     locations: classpath:db/migration/rococo-artist
+    table: flyway_history_artist
   jpa:
     hibernate:
       ddl-auto: none
@@ -73,7 +86,7 @@ spring:
       - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
       - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
   datasource:
-    url: 'jdbc:mysql://localhost:3306/rococo-artist?serverTimezone=UTC&createDatabaseIfNotExist=true'
+    url: 'jdbc:mysql://localhost:3306/rococo?serverTimezone=UTC&createDatabaseIfNotExist=true'
 ---
 spring:
   config:
@@ -85,5 +98,5 @@ spring:
       - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
       - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
   datasource:
-    url: 'jdbc:mysql://rococo-all-db:3306/rococo-artist?serverTimezone=UTC&createDatabaseIfNotExist=true'
+    url: 'jdbc:mysql://rococo-all-db:3306/rococo?serverTimezone=UTC&createDatabaseIfNotExist=true'
 ---

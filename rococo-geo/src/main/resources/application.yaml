@@ -2,18 +2,6 @@ grpc:
   server:
     port: 8094
 
-management:
-  server:
-    port: 18094
-  endpoints:
-    web:
-      exposure:
-        include: health
-  endpoint:
-    health:
-      probes:
-        enabled: true
-
 spring:
   application:
     name: rococo-geo

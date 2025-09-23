@@ -17,6 +17,8 @@ management:
         enabled: true
 
 spring:
+  main:
+    web-application-type: none
   application:
     name: rococo-museum
   datasource:
@@ -30,7 +32,6 @@ spring:
     username: root
     password: secret
   flyway:
-    repair-on-migrate: true
     enabled: true
     baseline-on-migrate: true
     baseline-version: 0

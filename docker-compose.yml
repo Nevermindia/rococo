@@ -81,21 +81,29 @@ services:
     depends_on:
       auth.rococo.dc:
         condition: service_healthy
+      museum.rococo.dc:
+        condition: service_healthy
+      artist.rococo.dc:
+        condition: service_healthy
+      painting.rococo.dc:
+        condition: service_healthy
+      geo.rococo.dc:
+        condition: service_healthy
+      userdata.rococo.dc:
+        condition: service_healthy
     networks:
       - rococo-network
 
-  # Сервисы, которые могут запускаться параллельно после auth
   geo.rococo.dc:
     container_name: geo.rococo.dc
     image: ${PREFIX}/rococo-geo-docker:latest
     ports:
       - 8094:8094
-      - 18094:18094
     healthcheck:
-      test: "wget --spider http://localhost:8094/actuator/health || exit 1"
+      test: ["CMD", "pgrep", "java"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 6
     restart: always
     depends_on:
       auth.rococo.dc:
@@ -110,12 +118,11 @@ services:
     image: ${PREFIX}/rococo-artist-docker:latest
     ports:
       - 8092:8092
-      - 18092:18092
     healthcheck:
-      test: "wget --spider http://localhost:8092/actuator/health || exit 1"
+      test: ["CMD", "pgrep", "java"]
       interval: 15s
       timeout: 5s
-      retries: 5
+      retries: 6
     restart: always
     depends_on:
       auth.rococo.dc:
@@ -130,9 +137,8 @@ services:
     image: ${PREFIX}/rococo-userdata-docker:latest
     ports:
       - 8091:8091
-      - 18091:18091
     healthcheck:
-      test: "wget --spider http://localhost:18091/actuator/health || exit 1"
+      test: ["CMD", "pgrep", "java"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -145,7 +151,6 @@ services:
     networks:
       - rococo-network
 
-  # Museum зависит от geo (т.к. есть FK на country)
   museum.rococo.dc:
     container_name: museum.rococo.dc
     environment:
@@ -156,9 +161,8 @@ services:
     image: ${PREFIX}/rococo-museum-docker:latest
     ports:
       - 8093:8093
-      - 18093:18093
     healthcheck:
-      test: "wget --spider http://localhost:18093/actuator/health || exit 1"
+      test: ["CMD", "pgrep", "java"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -171,15 +175,13 @@ services:
     networks:
       - rococo-network
 
-  # Painting зависит от museum и artist (т.к. есть FK на museum_id и artist_id)
   painting.rococo.dc:
     container_name: painting.rococo.dc
     image: ${PREFIX}/rococo-painting-docker:latest
     ports:
       - 8095:8095
-      - 18095:18095
     healthcheck:
-      test: "wget --spider http://localhost:18095/actuator/health || exit 1"
+      test: ["CMD", "pgrep", "java"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -208,7 +210,6 @@ services:
     networks:
       - rococo-network
 
-  # Остальные сервисы (selenoid, allure и т.д.) остаются без изменений
   selenoid:
     profiles:
       - test

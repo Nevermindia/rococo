@@ -213,7 +213,7 @@ public class MuseumTest {
                 );
     }
 
-    @ScreenShotTest(value = "museum_expected.png")
+    @ScreenShotTest(value = "screenshots/museum_expected.png")
     @DisplayName("WEB: Редактирование изображения музея")
     @ApiLogin(user = @User())
     @Museum

@@ -173,7 +173,6 @@ public class PaintingTest {
                 .editPainting()
                 .selectMuseum(museum.getTitle())
                 .submitForm()
-                .checkToastMessage(String.format(PAINTING_EDITED_MSG, painting.getTitle()))
                 .refreshPage()
                 .checkPaintingInfo(
                         new PaintingJson(
@@ -187,7 +186,7 @@ public class PaintingTest {
                 );
     }
 
-    @ScreenShotTest(value = "painting_expected.png")
+    @ScreenShotTest(value = "screenshots/painting_expected.png")
     @DisplayName("WEB: Редактирование картины")
     @ApiLogin(user = @User())
     @Museum

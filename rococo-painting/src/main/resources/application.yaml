@@ -42,6 +42,8 @@ spring:
     open-in-view: false
 
 logging:
+  file:
+    path: .logs/rococo-painting/
   level:
     root: INFO
     org.springframework.kafka: DEBUG

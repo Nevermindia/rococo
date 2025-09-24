@@ -4,18 +4,6 @@ grpc:
     max-inbound-message-size: 15728640
     max-outbound-message-size: 15728640
 
-management:
-  server:
-    port: 18093
-  endpoints:
-    web:
-      exposure:
-        include: health
-  endpoint:
-    health:
-      probes:
-        enabled: true
-
 spring:
   main:
     web-application-type: none
@@ -49,6 +37,8 @@ spring:
     show-sql: false
     open-in-view: false
 logging:
+  file:
+    path: .logs/rococo-museum/
   level:
     root: INFO
     org.springframework.web: INFO

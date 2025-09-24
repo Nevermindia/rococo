@@ -22,17 +22,6 @@ public class RegistrationTest {
     private final static String USERNAME_ALREADY_EXIST_ERROR = "Username `%s` already exists";
 
     @Test
-    @DisplayName("WEB: Успешная регистрация нового пользователя")
-    void registerNewUserTest() {
-        String username = RandomDataUtils.randomUsername();
-        String password = RandomDataUtils.randomPassword();
-        Selenide.open(RegisterPage.URL, RegisterPage.class)
-                .doRegister(username, password, password)
-                .doLogin(username, password)
-                .checkMainPageIsLoaded();
-    }
-
-    @Test
     @DisplayName("WEB: Ошибка при попытке регистрации существующим пользователем")
     @User
     void registerExistingUserErrorTest(UserJson createdUser) {
@@ -88,5 +77,16 @@ public class RegistrationTest {
                 .setPasswordSubmit(password)
                 .submitRegistration()
                 .checkErrorMessage(PASSWORD_LENGTH_ERROR);
+    }
+
+    @Test
+    @DisplayName("WEB: Успешная регистрация нового пользователя")
+    void registerNewUserTest() {
+        String username = RandomDataUtils.randomUsername();
+        String password = RandomDataUtils.randomPassword();
+        Selenide.open(RegisterPage.URL, RegisterPage.class)
+                .doRegister(username, password, password)
+                .doLogin(username, password)
+                .checkMainPageIsLoaded();
     }
 }

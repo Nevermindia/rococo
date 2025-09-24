@@ -38,6 +38,8 @@ spring:
 
 
 logging:
+  file:
+    path: .logs/rococo-geo/
   level:
     root: INFO
     org.springframework.web: INFO

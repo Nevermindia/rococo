@@ -41,7 +41,7 @@ public class ProfileTest {
     }
 
 
-    @ScreenShotTest(value = "avatar_expected.png")
+    @ScreenShotTest(value = "screenshots/avatar_expected.png")
     @DisplayName("WEB: Загрузка фото профиля")
     @ApiLogin(user = @User)
     void updateProfileWithAnImage(BufferedImage expectedAvatar) throws IOException {

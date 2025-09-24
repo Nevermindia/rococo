@@ -9,6 +9,8 @@ spring:
     name: rococo-gateway
 
 logging:
+  file:
+    path: .logs/rococo-gateway/
   level:
     root: INFO
     org.springframework.web: DEBUG

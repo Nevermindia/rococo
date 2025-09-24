@@ -46,7 +46,7 @@ public class ScreenShotTestExtension implements ParameterResolver, TestExecution
                 if (screenShotTest.rewriteExpected()) {
                     BufferedImage actual = getActual();
                     if (actual != null) {
-                        ImageIO.write(actual, "png", new File("src/test/resources/" + screenShotTest.value()));
+                        ImageIO.write(actual, "png", new File(".screen-output/" + screenShotTest.value()));
                     }
                 }
                 ScreenDiff screenDiff = new ScreenDiff(

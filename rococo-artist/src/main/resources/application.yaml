@@ -49,6 +49,8 @@ spring:
       mode: always
 
 logging:
+  file:
+    path: .logs/rococo-artist/
   level:
     root: INFO
     org.springframework.kafka: DEBUG

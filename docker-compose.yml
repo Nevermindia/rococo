@@ -251,17 +251,17 @@ services:
       context: ./
       dockerfile: ./rococo-tests/Dockerfile
     environment:
-      - _JAVA_OPTIONS=-Xmx4g -Xms512m
       - ALLURE_DOCKER_API=${ALLURE_DOCKER_API}
       - GITHUB_TOKEN=${GITHUB_TOKEN}
       - BUILD_URL=${BUILD_URL}
       - HEAD_COMMIT_MESSAGE=${HEAD_COMMIT_MESSAGE}
       - EXECUTION_TYPE=${EXECUTION_TYPE}
     volumes:
+      - ./allure-results:/rococo/rococo-tests/build/allure-results/
       - ./rococo-tests/.screen-output/screenshots/selenoid:/rococo/rococo-tests/.screen-output/screenshots/selenoid
     depends_on:
       client.rococo.dc:
-        condition: service_healthy
+        condition: service_started
     networks:
       - rococo-network
 

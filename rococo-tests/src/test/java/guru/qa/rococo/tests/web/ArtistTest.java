@@ -114,7 +114,7 @@ public class ArtistTest {
     }
 
 
-    @ScreenShotTest(value = "artist_expected.png")
+    @ScreenShotTest(value = "screenshots/artist_expected.png")
     @DisplayName("WEB: Редактирование фото художника")
     @ApiLogin(user = @User())
     @Artist

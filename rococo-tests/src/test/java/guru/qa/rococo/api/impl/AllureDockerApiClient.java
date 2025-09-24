@@ -70,14 +70,17 @@ public class AllureDockerApiClient extends RestClient {
         assertEquals(200, response.code());
     }
 
-    public void generateReport(String projectId) {
+    public void generateReport(String projectId,
+                               String executionName,
+                               String executionFrom,
+                               String executionType) {
         final Response<JsonNode> response;
         try {
             response = allureDockerApi.generateReport(
                     projectId,
-                    System.getenv("HEAD_COMMIT_MESSAGE"),
-                    System.getenv("BUILD_URL"),
-                    System.getenv("EXECUTION_TYPE")
+                    executionName,
+                    executionFrom,
+                    executionType
             ).execute();
         } catch (IOException e) {
             throw new AssertionError(e);

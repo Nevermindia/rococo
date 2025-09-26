@@ -70,7 +70,7 @@ docker pull confluentinc/cp-kafka:7.3.2
 ```posh
 mitriis-MacBook-Pro ~ % docker images            
 REPOSITORY                 TAG              IMAGE ID       CREATED         SIZE
-postgres                   15.1             9f3ec01f884d   10 days ago     379MB
+mysql                      8.3.0            9f3ec01f884d   10 days ago     379MB
 confluentinc/cp-kafka      7.3.2            db97697f6e28   12 months ago   457MB
 confluentinc/cp-zookeeper  7.3.2            6fe5551964f5   7 years ago     451MB
 
@@ -181,6 +181,6 @@ User-MacBook-Pro  rococo % bash docker-compose-e2e.sh
 #### 4. Allure доступен по адресу:
 Allure-ui доступен по адресу: http://localhost:5252/
 
-Allure report доступен по адресу: http://localhost:5050/allure-docker-service/projects/rococo/reports/latest/index.html
+Allure report доступен по адресу: http://localhost:5252/allure-docker-service-ui/projects/default/reports/latest
 
 

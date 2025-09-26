@@ -1,6 +1,7 @@
 package guru.qa.rococo.jupiter.extension;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import guru.qa.rococo.config.Config;
 import guru.qa.rococo.jupiter.annotation.ScreenShotTest;
 import guru.qa.rococo.model.allure.ScreenDiff;
 import io.qameta.allure.Allure;
@@ -23,6 +24,8 @@ public class ScreenShotTestExtension implements ParameterResolver, TestExecution
     public static final ObjectMapper objectMapper = new ObjectMapper();
     public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(ScreenShotTestExtension.class);
     public static final String ASSERT_SCREEN_MESSAGE = "Screen comparison failure";
+    private static final Config CFG = Config.getInstance();
+    private static final Base64.Encoder encoder = Base64.getEncoder();
 
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
@@ -33,36 +36,44 @@ public class ScreenShotTestExtension implements ParameterResolver, TestExecution
     @SneakyThrows
     @Override
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        ScreenShotTest screenShotTest = extensionContext.getRequiredTestMethod().getAnnotation(ScreenShotTest.class);
-        return ImageIO.read(new ClassPathResource(screenShotTest.value()).getInputStream());
+        final ScreenShotTest screenShotTest = extensionContext.getRequiredTestMethod().getAnnotation(ScreenShotTest.class);
+        return ImageIO.read(
+                new ClassPathResource(
+                        CFG.screenshotBaseDir() + screenShotTest.expected()
+                ).getInputStream()
+        );
     }
 
     @Override
     public void handleTestExecutionException(ExtensionContext context, Throwable throwable) throws Throwable {
-
-        if (throwable.getMessage().contains(ASSERT_SCREEN_MESSAGE)) {
-            ScreenShotTest screenShotTest = context.getRequiredTestMethod().getAnnotation(ScreenShotTest.class);
-            if (screenShotTest != null) {
-                if (screenShotTest.rewriteExpected()) {
-                    BufferedImage actual = getActual();
-                    if (actual != null) {
-                        ImageIO.write(actual, "png", new File(".screen-output/" + screenShotTest.value()));
-                    }
+        final ScreenShotTest screenShotTest = context.getRequiredTestMethod().getAnnotation(ScreenShotTest.class);
+        if (screenShotTest != null) {
+            if (screenShotTest.rewriteExpected()) {
+                final BufferedImage actual = getActual();
+                if (actual != null) {
+                    ImageIO.write(
+                            actual,
+                            "png",
+                            new File(".screen-output/" + CFG.screenshotBaseDir() + screenShotTest.expected())
+                    );
                 }
-                ScreenDiff screenDiff = new ScreenDiff(
-                        "data:image/png;base64," + Base64.getEncoder().encodeToString(imageToBytes(getExpected())),
-                        "data:image/png;base64," + Base64.getEncoder().encodeToString(imageToBytes(getActual())),
-                        "data:image/png;base64," + Base64.getEncoder().encodeToString(imageToBytes(getDiff()))
+            }
+
+            if (throwable.getMessage().contains(ASSERT_SCREEN_MESSAGE)) {
+                ScreenDiff screenDif = new ScreenDiff(
+                        "data:image/png;base64," + encoder.encodeToString(imageToBytes(getExpected())),
+                        "data:image/png;base64," + encoder.encodeToString(imageToBytes(getActual())),
+                        "data:image/png;base64," + encoder.encodeToString(imageToBytes(getDiff()))
                 );
 
                 Allure.addAttachment(
                         "Screenshot diff",
                         "application/vnd.allure.image.diff",
-                        objectMapper.writeValueAsString(screenDiff)
+                        objectMapper.writeValueAsString(screenDif)
                 );
             }
+            throw throwable;
         }
-        throw throwable;
     }
 
     public static void setExpected(BufferedImage expected){

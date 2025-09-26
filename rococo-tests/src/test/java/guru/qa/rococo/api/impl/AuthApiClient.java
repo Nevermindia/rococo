@@ -11,7 +11,6 @@ import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 import retrofit2.Response;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
 
@@ -43,7 +42,7 @@ public class AuthApiClient extends RestClient {
     @SneakyThrows
     public String login(String username, String password) {
         final String codeVerifier = OAuthUtils.generateCodeVerifier();
-        final String codeChallenge = OAuthUtils.generateCodeChallange(codeVerifier);
+        final String codeChallenge = OAuthUtils.generateCodeChallenge(codeVerifier);
         final String redirectUri = CFG.frontUrl() + "authorized";
         final String clientId = "client";
 

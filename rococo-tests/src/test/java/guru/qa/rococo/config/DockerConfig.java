@@ -18,11 +18,6 @@ enum DockerConfig implements Config {
     }
 
     @Override
-    public String databaseAddress() {
-        return "rococo-all-db:3306";
-    }
-
-    @Override
     public String frontUrl() {
         return "http://client.rococo.dc/";
     }
@@ -45,31 +40,7 @@ enum DockerConfig implements Config {
 
     @NotNull
     @Override
-    public String artistJdbcUrl() {
-        return "jdbc:mysql://rococo-all-db:3306/rococo";
-    }
-
-    @NotNull
-    @Override
-    public String paintingJdbcUrl() {
-        return "jdbc:mysql://rococo-all-db:3306/rococo";
-    }
-
-    @NotNull
-    @Override
-    public String museumJdbcUrl() {
-        return "jdbc:mysql://rococo-all-db:3306/rococo";
-    }
-
-    @NotNull
-    @Override
-    public String userdataJdbcUrl() {
-        return "jdbc:mysql://rococo-all-db:3306/rococo";
-    }
-
-    @NotNull
-    @Override
-    public String geoJdbcUrl() {
+    public String rococoJdbcUrl() {
         return "jdbc:mysql://rococo-all-db:3306/rococo";
     }
 

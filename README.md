@@ -44,15 +44,11 @@
 <img src="img/architecture.jpg" width="600">
 
 # Минимальные предусловия для работы с проектом ROCOCO
-#### 1. Установить Java версии 17 или новее
+#### 1. Установить Java версии 21
 #### 2. Установить пакетный менеджер для сборки front-end npm. [Инструкция](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) Рекомендованная версия Node.js - 18.13.0 (LTS)
 #### 3. Установить Docker
 
-[Установка на Windows](https://docs.docker.com/desktop/install/windows-install/)
-
 [Установка на Mac](https://docs.docker.com/desktop/install/mac-install/) (Для ARM и Intel разные пакеты)
-
-[Установка на Linux](https://docs.docker.com/desktop/install/linux-install/)
 
 Для проверки работы команд docker введите `docker -v`:
 
@@ -127,10 +123,14 @@ User-MacBook-Pro rococo-auth % gradle bootRun --args='--spring.profiles.active=l
 
 #### 4. Прописать в etc/hosts элиас для Docker-имени
 
-frontend: 127.0.0.1 client.rococo.dc,
+frontend: 127.0.0.1 client.rococo.dc
+
 auth: 127.0.0.1 auth.rococo.dc
+
 gateway: 127.0.0.1 gateway.rococo.dc
+
 allure: 127.0.0.1
+
 
 ```posh
 $ vi /etc/hosts
@@ -180,6 +180,7 @@ User-MacBook-Pro  rococo % bash docker-compose-e2e.sh
 
 #### 4. Allure доступен по адресу:
 Allure-ui доступен по адресу: http://localhost:5252/
+
 Allure report доступен по адресу: http://localhost:5050/allure-docker-service/projects/rococo/reports/latest/index.html
 
 

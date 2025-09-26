@@ -9,21 +9,11 @@ import java.util.UUID;
 public class ArtistRepositoryHibernate extends BaseRepository {
 
     public ArtistRepositoryHibernate() {
-        super(Config.getInstance().artistJdbcUrl());
+        super(Config.getInstance().rococoJdbcUrl());
     }
 
     @Transactional
     public void createArtist(ArtistEntity artist) {
         tx.execute(() -> em.persist(artist));
-    }
-
-    @Transactional
-    public void deleteArtistById(UUID artistId) {
-        tx.execute(() -> {
-            ArtistEntity artist = em.find(ArtistEntity.class, artistId);
-            if (artist != null) {
-                em.remove(artist);
-            }
-        });
     }
 }

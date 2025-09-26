@@ -10,16 +10,8 @@ import java.util.UUID;
 public class GeoRepositoryHibernate extends BaseRepository {
 
     public GeoRepositoryHibernate() {
-        super(Config.getInstance().geoJdbcUrl());
+        super(Config.getInstance().rococoJdbcUrl());
     }
-
-    @Transactional
-    public CountryEntity getCountryById(UUID countryId) {
-        return em.createQuery("select country from CountryEntity country where country.id=:countryId", CountryEntity.class)
-                .setParameter("countryId", countryId)
-                .getSingleResult();
-    }
-
 
     @Transactional
     public CountryEntity getCountryByName(String countryName) {

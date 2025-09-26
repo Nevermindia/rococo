@@ -27,3 +27,4 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 /rococo-grpc-common/src/generated/
+/rococo-tests/.screen-output

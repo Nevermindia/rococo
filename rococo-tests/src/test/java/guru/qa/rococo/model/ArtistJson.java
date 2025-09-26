@@ -35,7 +35,6 @@ public class ArtistJson {
 
     }
 
-
     public static ArtistJson fromGrpcMessage(ArtistResponse response) {
         ArtistJson artistJson = new ArtistJson();
         artistJson.setId(fromString(response.getId()));

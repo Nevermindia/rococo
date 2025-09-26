@@ -186,7 +186,7 @@ public class PaintingTest {
                 );
     }
 
-    @ScreenShotTest(value = "screenshots/painting_expected.png")
+    @ScreenShotTest(expected = "painting_expected.png")
     @DisplayName("WEB: Редактирование картины")
     @ApiLogin(user = @User())
     @Museum

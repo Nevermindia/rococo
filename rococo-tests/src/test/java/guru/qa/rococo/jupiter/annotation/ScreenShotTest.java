@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Test
 public @interface ScreenShotTest {
-    String value();
+    String expected();
     boolean rewriteExpected() default false;
 }

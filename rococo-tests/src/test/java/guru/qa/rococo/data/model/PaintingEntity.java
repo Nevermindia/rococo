@@ -35,17 +35,6 @@ public class PaintingEntity {
     @Column(name = "artist_id", nullable = false, length = 36)
     private UUID artistId;
 
-    public static PaintingEntity fromJson(PaintingJson paintingJson) {
-        PaintingEntity paintingEntity = new PaintingEntity();
-        paintingEntity.setId(paintingJson.getId());
-        paintingEntity.setTitle(paintingJson.getTitle());
-        paintingEntity.setDescription(paintingJson.getDescription());
-        paintingEntity.setContent(paintingJson.getContent().getBytes());
-        paintingEntity.setMuseumId(paintingJson.getMuseum().getId());
-        paintingEntity.setArtistId(paintingJson.getArtist().getId());
-        return paintingEntity;
-    }
-
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

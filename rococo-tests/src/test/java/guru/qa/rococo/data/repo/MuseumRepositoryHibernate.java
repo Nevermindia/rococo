@@ -9,22 +9,12 @@ import java.util.UUID;
 public class MuseumRepositoryHibernate extends BaseRepository {
 
     public MuseumRepositoryHibernate() {
-        super(Config.getInstance().museumJdbcUrl());
+        super(Config.getInstance().rococoJdbcUrl());
     }
 
     @Transactional
     public MuseumEntity createMuseum(MuseumEntity museum) {
         tx.execute(() -> em.persist(museum));
         return museum;
-    }
-
-    @Transactional
-    public void deleteMuseumById(UUID museumId) {
-        tx.execute(() -> {
-            MuseumEntity museum = em.find(MuseumEntity.class, museumId);
-            if (museum != null) {
-                em.remove(museum);
-            }
-        });
     }
 }

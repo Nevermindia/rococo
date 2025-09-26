@@ -40,15 +40,4 @@ public record UserJson(
                 new TestData(entity.getEncodedPassword())
         );
     }
-
-    public static @Nonnull UserJson fromGrpc(@Nonnull UserResponse user) {
-        return new UserJson(
-                user.getId().isEmpty() ? null : UUID.fromString(user.getId()),
-                user.getUsername(),
-                user.getFirstname(),
-                user.getLastname(),
-                user.getAvatar().toByteArray(),
-                null
-        );
-    }
 }

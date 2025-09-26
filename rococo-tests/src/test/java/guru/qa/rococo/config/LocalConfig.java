@@ -13,11 +13,6 @@ enum LocalConfig implements Config {
     }
 
     @Override
-    public String databaseAddress() {
-        return "localhost:3306";
-    }
-
-    @Override
     public String frontUrl() {
         return "http://127.0.0.1:3000/";
     }
@@ -36,31 +31,7 @@ enum LocalConfig implements Config {
 
     @NotNull
     @Override
-    public String artistJdbcUrl() {
-        return "jdbc:mysql://localhost:3306/rococo";
-    }
-
-    @NotNull
-    @Override
-    public String paintingJdbcUrl() {
-        return "jdbc:mysql://localhost:3306/rococo";
-    }
-
-    @NotNull
-    @Override
-    public String museumJdbcUrl() {
-        return "jdbc:mysql://localhost:3306/rococo";
-    }
-
-    @NotNull
-    @Override
-    public String userdataJdbcUrl() {
-        return "jdbc:mysql://localhost:3306/rococo";
-    }
-
-    @NotNull
-    @Override
-    public String geoJdbcUrl() {
+    public String rococoJdbcUrl() {
         return "jdbc:mysql://localhost:3306/rococo";
     }
 

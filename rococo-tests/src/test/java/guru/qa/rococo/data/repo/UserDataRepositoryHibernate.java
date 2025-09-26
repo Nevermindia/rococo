@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserDataRepositoryHibernate extends BaseRepository {
 
     public UserDataRepositoryHibernate() {
-        super(Config.getInstance().userdataJdbcUrl());
+        super(Config.getInstance().rococoJdbcUrl());
     }
 
     @Transactional
